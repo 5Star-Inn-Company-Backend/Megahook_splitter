@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\WebhookBucket;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\WebhookBucket;
 
 class WebhookBucketController extends Controller
 {
@@ -12,8 +13,13 @@ class WebhookBucketController extends Controller
      */
     public function index()
     {
-        // $webhookBuckets = WebhookBucket::where('user_id',auth()->user()->id)->get();
-        return view('webhooks_buckets.index');
+        try {
+            $webhookBuckets = WebhookBucket::where('user_id', auth()->user()->id)->get();
+            return view('webhooks_buckets.index', compact('webhookBuckets'));
+        } catch (\Exception $e) {
+           return redirect()->back()->with('error', $e->getMessage());
+        }
+        
     }
 
     /**
@@ -29,7 +35,13 @@ class WebhookBucketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate(['name' => ['required', 'string']]);
+         $user = new User();
+        if ($user->WebhookBuckets()->create($data)) {
+            return response()->json(['message' => 'success', 'status' => true]);
+        };
+
+        return response()->json(['message' => 'failed', 'status' => false]);
     }
 
     /**
@@ -37,7 +49,7 @@ class WebhookBucketController extends Controller
      */
     public function show(WebhookBucket $webhookBucket)
     {
-        //
+        return view('webhooks_buckets.show', compact('webhookBucket'));
     }
 
     /**

@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckUserPlan;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WebhookBucketController;
 
 Route::get('/', function () {
@@ -22,5 +23,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::resource('webhook-buckets', WebhookBucketController::class);
+Route::get('webhooks/{webhookBucket}', [WebhookController::class,'create'])->name('webhook.create');
+Route::post('webhooks/{webhookBucket}', [WebhookController::class,'store'])->name('webhook.store');
 
 require __DIR__.'/auth.php';

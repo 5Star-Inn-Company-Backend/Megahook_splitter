@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Plan;
+use App\Models\WebhookBucket;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -56,5 +57,10 @@ class User extends Authenticatable
     public function latestPlan()
     {
         return $this->plans()->latest()->first();
+    }
+
+
+    public function webhookBuckets(){
+        return $this->hasMany(WebhookBucket::class);
     }
 }

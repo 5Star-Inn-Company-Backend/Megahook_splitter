@@ -25,7 +25,7 @@
                 </a>
             </div>  --}}
 
-            <div class="w-full sm:max-w-sm mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg" style="border-top: 5px solid #1bac91">
+            <div class="w-full sm:max-w-lg mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg" style="border-top: 5px solid #1bac91">
                 {{ $slot }}
             </div>
         </div>

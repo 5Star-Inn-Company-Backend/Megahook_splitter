@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('webhook_buckets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('something');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

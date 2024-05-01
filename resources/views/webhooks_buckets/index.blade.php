@@ -16,11 +16,22 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+            @foreach ($webhookBuckets as $webhookBucket)
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-1">
+                    <div class="p-6 text-gray-900">
+                        <div style="display: flex; justify-content:space-between">
+                            <li>
+                                <a href="{{route('webhook-buckets.show',$webhookBucket->id)}}">{{ $webhookBucket->name }}</a>
+                            </li>
 
+                            <div>
+                                <a href="{{route('webhook.create',$webhookBucket->id)}}" class="btn btn-primary text-xs"> create new input <i class="fa fa-plus"></i></a>
+                                <a href="" class="btn btn-warning text-xs"> edit bucket <i class="fa fa-pen"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
 
@@ -39,15 +50,20 @@
                             <h3 style="color:#1bac91" class="font-weight-bold">Add New Bucket</h3>
                             <label for="bucket name"> Enter a name for your bucket and save</label>
                             <form action="" method="post" id="bucketFormId">
+                                <p id="error" class="text-danger p-2" style="display: none"></p>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="bucket-name" name="name"
-                                    placeholder="Enter bucket name"/>
+                                        placeholder="Enter bucket name" />
                                 </div>
-                            
+
                                 <div class="form-group text-right">
-                                    <input type="submit" class="btn w-25" id="submitBtn" style="background: #1bac91; color :#fff" value="save" />
+                                    <button type="submit" class="btn w-25" id="submitBtn"
+                                        style="background: #1bac91; color :#fff">
+                                        save
+
+                                    </button>
                                 </div>
-                              
+
                             </form>
                         </div>
                     </section>
@@ -62,17 +78,72 @@
     </div>
 
     <script>
-        $('#bucketFormId').on('submit', function(e){
+        $('#bucketFormId').on('submit', function(e) {
             e.preventDefault();
+
+            $('#bucket-name').on('keydown', function() {
+                $('#error').text('').hide();
+            });
+
             const bucketName = $('#bucket-name').val();
 
-            if(bucketName =="" || bucketName == null){
+            if (bucketName.trim() == "" || bucketName.trim() == null) {
+                $('#error').text('kindly Enter a valid bucket name').show();
                 return;
             }
+
+            const spinner = ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Saving...`;
+
+            const submitBtn = $('#submitBtn');
+            const submitBtnText = 'Save';
+
+            submitBtn.html(spinner).prop('disabled', true);
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/webhook-buckets",
+                data: {
+                    name: bucketName
+                },
+                dataType: 'json',
+                success: function() {
+                    submitBtn.text(submitBtnText).prop('disabled', false);
+                    window.location.reload();
+
+                },
+                error: function() {
+                    submitBtn.text(submitBtnText).prop('disabled', false);
+                    $('#error').text('failed to save bucket name').show();
+                }
+
+            });
+
+
+            // $.post("/webhook-buckets", {
+            //             name: bucketName
+            //         },
+            //         function() {
+            //             console.log("success");
+            //         })
+            //     .done(function() {
+            //         submitBtn.val(submitBtnText).prop('disabled', false);
+            //     })
+            //     .fail(function() {
+            //         submitBtn.val(submitBtnText).prop('disabled', false);
+            //     })
+            //     .always(function() {
+            //         submitBtn.val(submitBtnText).prop('disabled', false);
+            //     });
+
 
             // alert(bucketName);
         })
     </script>
 </x-main-layout>
-
-
