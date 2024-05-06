@@ -14,19 +14,25 @@
         </div>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @foreach ($webhookBuckets as $webhookBucket)
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-1">
                     <div class="p-6 text-gray-900">
                         <div style="display: flex; justify-content:space-between">
                             <li>
-                                <a href="{{route('webhook-buckets.show',$webhookBucket->id)}}">{{ $webhookBucket->name }}</a>
+                                <a
+                                    href="{{ route('webhook-buckets.show', $webhookBucket->id) }}" class="font-weight-bold" style="font-size: 16px;" >{{ ucwords($webhookBucket->name) }}</a>
                             </li>
 
                             <div>
-                                <a href="{{route('webhook.create',$webhookBucket->id)}}" class="btn btn-primary text-xs"> create new input <i class="fa fa-plus"></i></a>
-                                <a href="" class="btn btn-warning text-xs"> edit bucket <i class="fa fa-pen"></i></a>
+                                <a href="{{ route('webhook.create', $webhookBucket->id) }}"
+                                    class="btn btn-primary "> create new input <i class="fa fa-plus"></i></a>
+                                <button type="button" class="btn btn-warning "
+                                    onclick="editBucketBtn({{ $webhookBucket }})" style="cursor:pointer"
+                                    data-toggle="modal" data-target="#editBucket" id="edit-bucket-btn">
+                                    edit bucket <i class="fa fa-pen"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -34,8 +40,6 @@
             @endforeach
         </div>
     </div>
-
-
 
 
     <div class="modal fade" id="createBucket" data-backdrop="static" data-keyboard="false" tabindex="-1"
@@ -77,6 +81,9 @@
         </div>
     </div>
 
+
+    @include('webhooks_buckets.edit-bucket-modal')
+
     <script>
         $('#bucketFormId').on('submit', function(e) {
             e.preventDefault();
@@ -114,8 +121,8 @@
                 },
                 dataType: 'json',
                 success: function() {
-                    submitBtn.text(submitBtnText).prop('disabled', false);
                     window.location.reload();
+                    submitBtn.text(submitBtnText).prop('disabled', false);
 
                 },
                 error: function() {
@@ -124,26 +131,9 @@
                 }
 
             });
-
-
-            // $.post("/webhook-buckets", {
-            //             name: bucketName
-            //         },
-            //         function() {
-            //             console.log("success");
-            //         })
-            //     .done(function() {
-            //         submitBtn.val(submitBtnText).prop('disabled', false);
-            //     })
-            //     .fail(function() {
-            //         submitBtn.val(submitBtnText).prop('disabled', false);
-            //     })
-            //     .always(function() {
-            //         submitBtn.val(submitBtnText).prop('disabled', false);
-            //     });
-
-
-            // alert(bucketName);
         })
+
+       
     </script>
+
 </x-main-layout>

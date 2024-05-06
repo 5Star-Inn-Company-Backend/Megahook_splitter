@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\Request;
 use App\Models\WebhookBucket;
+use Illuminate\Http\Request;
 
 class WebhookBucketController extends Controller
 {
@@ -13,13 +12,8 @@ class WebhookBucketController extends Controller
      */
     public function index()
     {
-        try {
-            $webhookBuckets = WebhookBucket::where('user_id', auth()->user()->id)->get();
-            return view('webhooks_buckets.index', compact('webhookBuckets'));
-        } catch (\Exception $e) {
-           return redirect()->back()->with('error', $e->getMessage());
-        }
-        
+        $webhookBuckets = WebhookBucket::with('webhooks.destinations')->where('user_id', auth()->user()->id)->get();
+        return view('webhooks_buckets.index', compact('webhookBuckets'));
     }
 
     /**
@@ -36,8 +30,8 @@ class WebhookBucketController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate(['name' => ['required', 'string']]);
-         $user = new User();
-        if ($user->WebhookBuckets()->create($data)) {
+
+        if (auth()->user()->WebhookBuckets()->create($data)) {
             return response()->json(['message' => 'success', 'status' => true]);
         };
 
@@ -57,7 +51,6 @@ class WebhookBucketController extends Controller
      */
     public function edit(WebhookBucket $webhookBucket)
     {
-        //
     }
 
     /**
@@ -65,7 +58,13 @@ class WebhookBucketController extends Controller
      */
     public function update(Request $request, WebhookBucket $webhookBucket)
     {
-        //
+        $data = $request->validate(['name' => ['required', 'string']]);
+
+        if ($webhookBucket->update($data)) {
+            return response()->json(['message' => 'success', 'status' => true]);
+        };
+
+        return response()->json(['message' => 'failed', 'status' => false]);
     }
 
     /**
@@ -73,6 +72,19 @@ class WebhookBucketController extends Controller
      */
     public function destroy(WebhookBucket $webhookBucket)
     {
-        //
+        if ($webhookBucket->webhooks) {
+            $webhookBucket->webhooks->each(function ($webhook) {
+                $webhook->destinations->each(function ($destination) {
+                    $destination->delete();
+                });
+                $webhook->delete();
+            });
+        }
+
+        if ($webhookBucket->delete()) {
+            return redirect()->route('webhook-buckets.index')->with(['succes' => 'success']);
+        }
+
+        return redirect()->route('webhook-buckets.index')->with(['failure' => 'failed']);;
     }
 }

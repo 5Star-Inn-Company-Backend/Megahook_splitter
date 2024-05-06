@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Destination;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Webhook extends Model
 {
@@ -59,12 +61,49 @@ class Webhook extends Model
         'authentication_type',
         'response_code',
         'response_content_type',
-        'response_content'
+        'response_content',
+        'endpoint'
     ];
 
 
     public function WebhookBucket(){
         return $this->belongsTo(WebhookBucket::class);
+    }
+
+    public function destinations(){
+        return $this->hasMany(Destination::class);
+    }
+
+     /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($webhook) {
+            $webhook->endpoint = config('app.url'). '/v1/test/'. self::generateRandomCodes();
+        });
+
+    }
+
+
+    public static function generateRandomCodes(){
+        $code = Str::random(16); 
+
+        $customCode = '';
+        for ($i = 0; $i < strlen($code); $i++) {
+          $char = $code[$i];
+          if (ctype_alpha($char)) {
+            $customCode .= (rand(0, 1) === 0) ? strtoupper($char) : $char; 
+          } else {
+            $customCode .= $char; 
+          }
+        }
+
+        return $customCode;
     }
     
 }

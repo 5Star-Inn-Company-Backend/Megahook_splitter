@@ -36,6 +36,10 @@
 
         <!-- Page Content -->
         <main>
+            <div class="max-w-7xl mx-auto pt-4 px-4 sm:px-6 lg:px-8">
+                <a href="{{url()->previous()}}"><i class="fa fa-reply text-lg"></i> go back </a>
+            </div>
+          
             {{ $slot }}
         </main>
     </div>

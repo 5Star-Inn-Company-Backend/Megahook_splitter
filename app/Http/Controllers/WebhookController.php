@@ -60,9 +60,11 @@ class WebhookController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Webhook $webhook)
+    public function edit(WebhookBucket $webhookBucket,Webhook $webhook)
     {
-        //
+        $authenticationTypes = Webhook::AUTHENTICATION_TYPES;
+        $statusCodes = Webhook::STATUS_CODES;
+        return view('buckets.edit', compact('webhook','webhookBucket','authenticationTypes','statusCodes'));
     }
 
     /**

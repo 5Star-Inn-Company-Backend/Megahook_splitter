@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('response_code');
             $table->string('response_content_type');
             $table->string('response_content');
+            $table->string('endpoint');
             $table->timestamps();
         });
     }
