@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WebhookBucketController;
 
 Route::get('/', function () {
@@ -33,6 +34,10 @@ Route::middleware('auth')->group(function () {
     Route::post('destinations/webhooks/{webhook}', [DestinationController::class, 'store']);
     Route::put('destinations/{destination}/webhooks/{webhook}', [DestinationController::class, 'update']);
     Route::delete('destinations/{destination}/webhooks', [DestinationController::class, 'destroy'])->name('destination.delete');
+
+
+    Route::resource('payments', PaymentController::class);
+    Route::get('payment-confirmation', [PaymentController::class,'confirmation']);
 
 });
 

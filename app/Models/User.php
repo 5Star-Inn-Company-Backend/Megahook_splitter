@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function plans()
     {
-        return $this->belongsToMany(Plan::class)->withPivot(['status','expires_at']);
+        return $this->belongsToMany(Plan::class)->withPivot(['status','expires_at'])->withTimestamps();
     }
 
 
