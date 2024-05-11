@@ -9,8 +9,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $plans = Plan::get();
         $showPricingModal = request()->get('showPricingModal');
-        return view('dashboard', compact('showPricingModal','plans'));
+        return view('dashboard', compact('showPricingModal'));
     }
 }

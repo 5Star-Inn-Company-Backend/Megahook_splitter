@@ -31,7 +31,13 @@
                                                 <li><i class="fa fa-check"></i> {{ $description }}</li>
                                             @endforeach
                                         </ul>
-                                        <a href="#" class="buy-btn">Get Started</a>
+                                        <form action="{{ route('payments.store') }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="amount"  value="{{$plan->price}}"/>
+                                            <input type="hidden" name="type" value="App\Models\Plan" />
+                                            <input type="hidden" name="type_id" value="{{$plan->id}}" />
+                                            <input type="submit" value="Get Started" class="buy-btn">
+                                        </form>
                                     </div>
                                 </div>
                             @endforeach
