@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Plan;
+use App\Models\Webhook;
 use App\Models\WebhookBucket;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -62,5 +63,9 @@ class User extends Authenticatable
 
     public function webhookBuckets(){
         return $this->hasMany(WebhookBucket::class);
+    }
+
+    public function webhooks(){
+        return $this->hasMany(Webhook::class);
     }
 }

@@ -19,12 +19,13 @@
                     <x-nav-link :href="route('webhook-buckets.index')" :active="request()->routeIs('webhook-buckets.*')">
                         <i class="fa fa-list mr-1" style="color: #1bac91"></i> {{ __('Webhook Buckets') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <i class="fa fa-server mr-1" style="color: #1bac91"></i> {{ __('Application') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('request-log.index')" :active="request()->routeIs('request-log.*')">
                         <i class="fa fa-institution mr-1" style="color: #1bac91"></i>{{ __('Request Logs') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('payments.index')" :active="request()->routeIs('payments.*')">
+                        <i class="fa fa-server mr-1" style="color: #1bac91"></i> {{ __('Payments') }}
+                    </x-nav-link>
+                  
                 </div>
             </div>
 
@@ -80,18 +81,19 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                <i class="fa fa-home mr-1" style="color: #1bac91"></i> {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+        
+            <x-responsive-nav-link :href="route('webhook-buckets.index')" :active="request()->routeIs('webhook-buckets.*')">
                 <i class="fa fa-list mr-1" style="color: #1bac91"></i> {{ __('Webhook Buckets') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                <i class="fa fa-server mr-1" style="color: #1bac91"></i> {{ __('Application') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link  :href="route('request-log.index')" :active="request()->routeIs('request-log.*')">
                 <i class="fa fa-institution mr-1" style="color: #1bac91"></i>{{ __('Request Logs') }}
+            </x-responsive-nav-link >
+
+            <x-responsive-nav-link :href="route('payments.index')" :active="request()->routeIs('payments.*')">
+                <i class="fa fa-server mr-1" style="color: #1bac91"></i> {{ __('Payments') }}
             </x-responsive-nav-link>
+
+         
         </div>
 
         <!-- Responsive Settings Options -->

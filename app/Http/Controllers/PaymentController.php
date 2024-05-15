@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\ActivatePlanJob;
+use Log;
+use Exception;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use App\Jobs\ActivatePlanJob;
 use App\Services\PaymentService;
 
 class PaymentController extends Controller
@@ -17,7 +19,12 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        return rescue(function () {
+            $payments = Payment::with('plan')->latest()->paginate(10);
+            return view('payments.index', compact('payments'));
+        }, function ($ex) {
+            return redirect()->back()->with('error', $ex->getMessage());
+        });
     }
 
     /**
@@ -33,8 +40,7 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-
-        return rescue(function () use($request) {
+        return rescue(function () use ($request) {
             $paymentData = $request->all();
             $result = $this->paymentService->processPayment($paymentData);
             if (filter_var($result, FILTER_VALIDATE_URL) === false) {
@@ -43,7 +49,7 @@ class PaymentController extends Controller
 
                 return redirect()->away($result);
             }
-        }, function ($ex){
+        }, function ($ex) {
             return redirect()->back()->with('error', $ex->getMessage());
         });
     }
@@ -61,11 +67,25 @@ class PaymentController extends Controller
      */
     public function confirmation(Request $request)
     {
-        $reference = $request->query('reference');
-        $payment = Payment::where('user_id', auth()->user()->id)->where('reference', $reference)->first();
-        $payment->update(['status' => Payment::SUCCESS]);
+        return rescue(function () use ($request) {
+            $reference = $request->query('reference');
+            $payment = Payment::where('user_id', auth()->user()->id)->where('reference', $reference)->first();
+            $paymentResponse = $this->paymentService->verifyPayment($payment);
 
-        return view('payments.confirmation-page', compact('payment'));
+            if ($paymentResponse['data']['status'] == 'success' && $paymentResponse['status'] == true) {
+                $payment->update(['status' => Payment::SUCCESS]);
+                ActivatePlanJob::dispatch($payment);
+                return view('payments.confirmation-page-success', compact('payment'));
+            }
+
+            $payment->update(['status' => Payment::FAILED]);
+            return view('payments.confirmation-page-failed', compact('payment'));
+        }, function (Exception $ex) use ($request) {
+            \Log::info($ex->getMessage());
+            $payment = Payment::where('user_id', auth()->user()->id)->where('reference', $request->reference)->first();
+            $payment->update(['status' => Payment::FAILED]);
+            return view('payments.confirmation-page-failed', compact('payment'));
+        });
     }
 
     /**

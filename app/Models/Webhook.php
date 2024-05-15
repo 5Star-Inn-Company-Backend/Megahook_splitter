@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Destination;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
@@ -56,7 +57,7 @@ class Webhook extends Model
     ];
 
     protected $fillable = [
-        'webhook_bucket_id',
+        'user_id',
         'input_name',
         'authentication_type',
         'response_code',
@@ -72,6 +73,10 @@ class Webhook extends Model
 
     public function destinations(){
         return $this->hasMany(Destination::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
      /**

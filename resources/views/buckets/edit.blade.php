@@ -25,8 +25,9 @@
                             <h1 class="p-1 font-weight-bold mb-3"  style="font-size:18px">Edit Input field</h1>
                         </div>
 
-                        <form action="{{route('webhook.update',[$webhookBucket->id, $webhook])}}" method="post">
+                        <form action="{{route('webhook.update',$webhook)}}" method="post">
                             @csrf
+                            @method('patch')
                             <div class="form-group">
                                 <label for="input-type">Input Name</label>
                                 <input type="text" name="input_name" class="form-control"  value="{{$webhook->input_name}}"/>

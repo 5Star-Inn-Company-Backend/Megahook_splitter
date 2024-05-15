@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckUserPlan;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RequestLogController;
 use App\Http\Controllers\DestinationController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WebhookBucketController;
 
 Route::get('/', function () {
@@ -26,10 +27,12 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('webhook-buckets', WebhookBucketController::class);
 
-    Route::get('webhooks/{webhookBucket}', [WebhookController::class, 'create'])->name('webhook.create');
-    Route::get('webhooks/{webhookBucket}/{webhook}', [WebhookController::class, 'edit'])->name('webhook.edit');
-    Route::post('webhooks/{webhookBucket}', [WebhookController::class, 'store'])->name('webhook.store');
-    Route::patch('webhooks/{webhookBucket}/{webhook}', [WebhookController::class, 'update'])->name('webhook.update');
+    Route::get('webhooks', [WebhookController::class, 'index'])->name('webhook.index');
+    Route::get('webhooks', [WebhookController::class, 'create'])->name('webhook.create');
+    Route::get('webhooks/{webhook}', [WebhookController::class, 'edit'])->name('webhook.edit');
+    Route::post('webhooks', [WebhookController::class, 'store'])->name('webhook.store');
+    Route::patch('webhooks/{webhook}', [WebhookController::class, 'update'])->name('webhook.update');
+    Route::delete('webhooks/{webhook}', [WebhookController::class, 'destroy'])->name('webhook.destroy');
 
     Route::post('destinations/webhooks/{webhook}', [DestinationController::class, 'store']);
     Route::put('destinations/{destination}/webhooks/{webhook}', [DestinationController::class, 'update']);
@@ -38,6 +41,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('payments', PaymentController::class);
     Route::get('payment-confirmation', [PaymentController::class,'confirmation']);
+    Route::resource('request-log', RequestLogController::class);
 
 });
 

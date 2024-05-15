@@ -47,7 +47,7 @@
                 <ul>
                     <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
                     <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                    <li><a class="nav-link scrollto" href="">Pricing</a></li>
+                    <li><a class="nav-link scrollto" href="#">Pricing</a></li>
                     <li><a class="nav-link scrollto" href="">Documentation</a></li>
 
                     @auth
