@@ -89,7 +89,7 @@ class Webhook extends Model
         parent::boot();
 
         static::creating(function ($webhook) {
-            $webhook->endpoint = config('app.url'). '/v1/test/'. self::generateRandomCodes();
+            $webhook->endpoint = self::generateRandomCodes();
         });
 
     }

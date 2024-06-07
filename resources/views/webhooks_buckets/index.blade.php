@@ -51,7 +51,7 @@
                             <div class="bg-white px-5 py-3 border border-gray-300 text-sm font-light">
                                 <div class="mb-2">
                                     <p>Incoming Endpoint:</p>
-                                    <input type="text" disabled value="{{ $webhook->endpoint }}"
+                                    <input type="text" disabled value="{{ route('incoming.webhook', $webhook->endpoint) }}"
                                         class="form-control" />
                                 </div>
 
@@ -63,7 +63,6 @@
                                     {{-- <a href="{{ route('webhook.edit', $webhook) }}" class="btn btn-secondary "> edit <i
                                             class="fa fa-pen"></i></a> --}}
                                 </div>
-
                                 @if (!$webhook->destinations->isEmpty())
                                     @foreach ($webhook->destinations as $destination)
                                         <div class="card my-2">
