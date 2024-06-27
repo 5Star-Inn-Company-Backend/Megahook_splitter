@@ -20,6 +20,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"
         integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
+        integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -40,7 +43,7 @@
         <!-- Page Content -->
         <main>
             <div class="max-w-7xl mx-auto pt-4 px-4 sm:px-6 lg:px-8">
-                <a href="{{ url()->previous() }}"><i class="fa fa-reply text-lg"></i> go back </a>
+                <!--<a href="{{ url()->previous() }}"><i class="fa fa-reply text-lg"></i> go back </a>-->
             </div>
 
             {{ $slot }}
@@ -51,20 +54,22 @@
     {{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> --}}
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
     <script>
         $('#shippingModal').modal('show');
 
         const today = new Date();
-          var startDate = today.toJSON().slice(0, 10);                                            // Create a new Date object with the current date and time
-          var endDate = new Date(today.setDate(today.getDate() + 1)).toJSON().slice(0, 10);       // Create a new Date object with the current date and time
+        var startDate = today.toJSON().slice(0, 10); // Create a new Date object with the current date and time
+        var endDate = new Date(today.setDate(today.getDate() + 1)).toJSON().slice(0,
+            10); // Create a new Date object with the current date and time
 
-          $(document).ready(function() {
+        $(document).ready(function() {
 
             var start = moment(startDate);
             var end = moment(endDate);
 
 
-          function cb(start, end) {
+            function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             }
 
@@ -72,26 +77,70 @@
                 startDate: start,
                 endDate: end,
                 ranges: {
-                  'Today': [moment(), moment()],
-                  'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                  'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                  'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                  'This Month': [moment().startOf('month'), moment().endOf('month')],
-                  'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
+                        'month').endOf('month')]
                 }
             }, cb);
             cb(start, end);
-            });
+        });
 
 
-            $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+        $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
             startDate = picker.startDate.format('YYYY-MM-DD');
             endDate = picker.endDate.format('YYYY-MM-DD');
             console.log('Start Date: ' + startDate);
             console.log('End Date: ' + endDate);
+        });
+
+
+        $(function() {
+            const ctx = document.getElementById('myBarChart');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: users,
+                    datasets: [{
+                        label: '#scores',
+                        data: results,
+                        borderWidth: 1,
+                        backgroundColor: 'rgb(79,129,189)',
+                    }]
+                },
+                options: {
+                    animations: {
+                        tension: {
+                            duration: 1000,
+                            easing: 'linear',
+                            from: 1,
+                            to: 0,
+                            loop: true
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            min: 0,
+                            max: 100
+                        }
+                    }
+                }
             });
+
+        });
+
+        $('#filterText').text('Last 24 Hours');
+
+        function updateFilterText(value) {
+            $('#filterText').text(value);
+        }
     </script>
 
+    @yield('script')
 
 </body>
 
