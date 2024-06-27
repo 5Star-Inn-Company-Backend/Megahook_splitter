@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Webhook;
 use Illuminate\Http\Request;
 use App\Models\WebhookBucket;
 
@@ -13,8 +12,8 @@ class WebhookBucketController extends Controller
      */
     public function index()
     {
-        $webhooks = Webhook::with('destinations')->where('user_id', auth()->user()->id)->get();
-        return view('webhooks_buckets.index', compact('webhooks'));
+        $webhookBuckets = WebhookBucket::with('webhooks.destinations')->where('user_id', auth()->user()->id)->get();
+        return view('webhooks_buckets.index', compact('webhookBuckets'));
     }
 
     /**
