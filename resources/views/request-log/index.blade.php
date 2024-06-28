@@ -38,7 +38,7 @@
                     <thead>
                         <tr class="font-weight-bold">
                             <th scope="col">#</th>
-                            <th scope="col">Sent/Last Attempt</th>
+                            <th scope="col">User</th>
                             <th scope="col">Bucket</th>
                             <th scope="col">Input</th>
                             <th scope="col">Destination</th>

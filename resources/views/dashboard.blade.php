@@ -33,10 +33,10 @@
                             <div class="row m-1" style="height: 120px; text-align:center;">
                                 <div class="col-md-2 pt-3" style="background: #4083be; color:#fff">
                                     <p class="mb-4" style="font-size:35px">0</p>
-                                    <p> Deliverability</p>
+                                    <p> Destination</p>
                                 </div>
                                 <div class="col-md-2 pt-3" style=" background:#9cbfdd; color:#fff">
-                                    <p class="mb-4" style="font-size:35px">0</p>
+                                    <p class="mb-4" style="font-size:35px">{{auth()->user()->webhooks()->count()}}</p>
                                     <p>Incoming Webhook</p>
                                 </div>
                                 <div class="col-md-2 pt-3" style=" background:#1d3b55; color:#fff">
