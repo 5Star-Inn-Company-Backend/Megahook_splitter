@@ -85,32 +85,30 @@
                                                     {{ $destination->endpoint_url }}</p>
                                             </div>
 
-                                            <div class="row m-1" style="height: 120px; text-align:center;">
-                                                <div class="col-md-2" style="background: #4083be">
-
-                                                </div>
+                                            <div class="row m-1" style="height: 120px; text-align:center; display:flex; justify-content:center;">
+                                              
                                                 <div class="col-md-2 pt-5"
-                                                    style="border-radius:5px; background:#9cbfdd">
+                                                    style="border-radius:5px; background:#90EE90; margin-right: 1rem">
                                                     <p class="mb-4" style="font-size:35px">0</p>
                                                     <p>Success</p>
                                                 </div>
                                                 <div class="col-md-2 pt-5"
-                                                    style="border-radius:5px; background:#1d3b55">
+                                                    style="border-radius:5px; background:#FF474C; margin-right: 1rem">
                                                     <p class="mb-4" style="font-size:35px">0</p>
                                                     <p>Failed</p>
                                                 </div>
                                                 <div class="col-md-2 pt-5"
-                                                    style="border-radius:5px; background:#7c8184">
+                                                    style="border-radius:5px; background:#7c8184; margin-right: 1rem">
                                                     <p class="mb-4" style="font-size:35px">0</p>
                                                     <p>Queued</p>
                                                 </div>
                                                 <div class="col-md-2 pt-5"
-                                                    style="border-radius:5px; background:#8496a9">
+                                                    style="border-radius:5px; background:#FFFFED; margin-right: 1rem">
                                                     <p class="mb-4" style="font-size:35px">0</p>
                                                     <p>Pending</p>
                                                 </div>
                                                 <div class=" col-md-2 pt-5"
-                                                    style="border-radius:5px; background:#3e5c74">
+                                                    style="border-radius:5px; background:#3e5c74; margin-right: 1rem">
                                                     <p class="mb-4" style="font-size:35px">0</p>
                                                     <p>Filtered</p>
                                                 </div>

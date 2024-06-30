@@ -13,22 +13,22 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-1">
                 <div class="p-6 text-gray-900">
                     <div>
-                        <h1 class="p-1 font-weight-bold mb-3" style="font-size:18px">Create Input field</h1>
+                        <h1 class="p-1 font-weight-bold mb-3" style="font-size:18px">Create Webhook</h1>
                     </div>
 
                     <form action="{{ route('webhook.store') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label for="input-type">Input Name</label>
+                            <label for="input-type">Name</label>
                             <input type="text" name="input_name" class="form-control"
-                                value="{{ old('input_name') }}" />
+                                value="{{ old('input_name') }}" placeholder="Enter Webhook name"/>
                             <x-input-error :messages="$errors->get('input_name')" class="mt-2" />
                         </div>
 
                         <div class="form-group">
                             <label for="input-type">Authentication Type</label>
                             <select name="authentication_type" id="" class="form-control">
-                                <option value="" disabled selected></option>
+                                <option value="" disabled selected>Choose Authentication Type</option>
                                 @foreach ($authenticationTypes as $key => $type)
                                     <option value="{{ $type }}">{{ $type }}</option>
                                 @endforeach
@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label for="input-type">Response Code</label>
                             <select name="response_code" id="" class="form-control">
-                                <option value="" disabled selected></option>
+                                <option value="" disabled selected>Choose Response Code</option>
                                 @foreach ($statusCodes as $key => $code)
                                     <option value="{{ $code }}">{{ $code }}</option>
                                 @endforeach
@@ -49,13 +49,17 @@
 
                         <div class="form-group">
                             <label for="input-type">Response Content Type</label>
-                            <input type="text" value="text/plain; charset=utf-8;" name="response_content_type"
-                                class="form-control" />
+                            <select name="response_content_type" id="" class="form-control">
+                                <option value="" disabled selected>Choose Content Type</option>
+                                    <option value="text/plain">TEXT</option>
+                                    <option value="json">JSON</option>
+                                    <option value="xml">XML</option>
+                            </select>
                             <x-input-error :messages="$errors->get('response_content_type')" class="mt-2" />
                         </div>
                         <div class="form-group">
-                            <label for="input-type">Input Type</label>
-                            <textarea name="response_content" class="form-control"> Message Received</textarea>
+                            <label for="input-type">Response Content</label>
+                            <textarea name="response_content" class="form-control" placeholder="Enter Response Content"></textarea>
                             <x-input-error :messages="$errors->get('response_content')" class="mt-2" />
                         </div>
                         <div class="form-group text-right">
