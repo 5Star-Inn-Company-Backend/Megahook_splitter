@@ -37,7 +37,7 @@ class WebhookController extends Controller
         $data =  $request->validate([
             'input_name' => ['required', 'string'],
             'authentication_type' => ['required', 'string', 'in:' . implode(",", Webhook::AUTHENTICATION_TYPES)],
-            'response_code' => ['required', 'string', 'in:' . implode(",", Webhook::STATUS_CODES)],
+            'response_code' => ['required', 'int'],
             'response_content_type' => ['required', 'string'],
             'response_content' => ['required', 'string']
         ]);

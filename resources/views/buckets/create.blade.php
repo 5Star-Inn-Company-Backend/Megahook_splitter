@@ -41,7 +41,7 @@
                             <select name="response_code" id="" class="form-control">
                                 <option value="" disabled selected>Choose Response Code</option>
                                 @foreach ($statusCodes as $key => $code)
-                                    <option value="{{ $code }}">{{ $code }}</option>
+                                    <option value="{{ $key }}">{{ $code }}</option>
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('response_code')" class="mt-2" />
