@@ -15,8 +15,12 @@ class WebhookBucketController extends Controller
     {
         // $webhookBuckets = WebhookBucket::with('webhooks.destinations')->where('user_id', auth()->user()->id)->get();
         // return view('webhooks_buckets.index', compact('webhookBuckets'));
-        $webhooks = Webhook::with('destinations')->where('user_id', auth()->user()->id)->get();
-        return view('webhooks_buckets.index', compact('webhooks'));
+        $query = Webhook::with('destinations')->where('user_id', auth()->user()->id);
+        $webhooks = $query->get();
+
+        $successResponseCode =  $query->successResponseCount(Webhook::STATUS_CODES['200'])->count();
+        $failedResponseCode =  Webhook::with('destinations')->where('user_id', auth()->user()->id)->where('response_code', Webhook::STATUS_CODES['500'])->count();
+        return view('webhooks_buckets.index', compact('webhooks', 'successResponseCode', 'failedResponseCode'));
     }
 
     /**

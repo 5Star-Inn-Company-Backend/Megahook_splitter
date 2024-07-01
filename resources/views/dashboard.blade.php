@@ -30,31 +30,28 @@
                         <h5 class="card-header"><i class="fa fa-tachometer" aria-hidden="true"></i> Deliverability Summary
                         </h5>
                         <div class="card-body">
-                            <div class="row m-1" style="height: 120px; text-align:center;">
-                                <div class="col-md-2 pt-3" style="background: #4083be; color:#fff">
-                                    <p class="mb-4" style="font-size:35px">0</p>
-                                    <p> Destination</p>
+                            <div class="row m-1" style="height: 120px; text-align:center; display:flex; justify-content:space-between;">
+                                <div class="col-md-2 pt-3" style="background: #4083be; color:#fff; border-radius:1rem">
+                                    <p class="mb-4" style="font-size:35px"> {{$destination}}</p>
+                                    <p>Destination</p>
                                 </div>
-                                <div class="col-md-2 pt-3" style=" background:#9cbfdd; color:#fff">
-                                    <p class="mb-4" style="font-size:35px">{{auth()->user()->webhooks()->count()}}</p>
+                                <div class="col-md-2 pt-3" style=" background:#9cbfdd; color:#fff; border-radius:1rem">
+                                    <p class="mb-4" style="font-size:35px">{{$webhooks}}</p>
                                     <p>Incoming Webhook</p>
                                 </div>
-                                <div class="col-md-2 pt-3" style=" background:#1d3b55; color:#fff">
-                                    <p class="mb-4" style="font-size:35px">0</p>
+                                <div class="col-md-2 pt-3" style=" background:#90EE90; color:#fff; border-radius:1rem">
+                                    <p class="mb-4" style="font-size:35px">{{$successResponse}}</p>
                                     <p>Successfully Deliveries</p>
                                 </div>
-                                <div class="col-md-2 pt-3" style=" background:#7c8184; color:#fff">
-                                    <p class="mb-4" style="font-size:35px">0</p>
+                                <div class="col-md-2 pt-3" style=" background:#7c8184; color:#fff; border-radius:1rem">
+                                    <p class="mb-4" style="font-size:35px">{{$secondFailureResponse}}</p>
                                     <p>4xxx Failures</p>
                                 </div>
-                                <div class="col-md-2 pt-3" style=" background:#8496a9; color:#fff">
-                                    <p class="mb-4" style="font-size:35px">0</p>
+                                <div class="col-md-2 pt-3" style=" background:#FF474C; color:#fff; border-radius:1rem">
+                                    <p class="mb-4" style="font-size:35px">{{$failureResponse}}</p>
                                     <p>5xxx Failures</p>
                                 </div>
-                                <div class=" col-md-2 pt-3" style="background:#3e5c74; color:#fff">
-                                    <p class="mb-4" style="font-size:35px">0</p>
-                                    <p>Filtered</p>
-                                </div>
+                                 
                             </div>
                         </div>
                     </div>
