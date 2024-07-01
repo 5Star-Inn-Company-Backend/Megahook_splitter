@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Destination;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -77,6 +78,16 @@ class Webhook extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function scopeSuccessResponseCount(Builder $query, $statusCode):Builder
+    {
+        return $query->where('user_id', auth()->user()->id)->where('response_code', $statusCode);
+    }
+
+    public function scopeErrorResponseCount(Builder $query, $statusCode):Builder
+    {
+        return $query->where('user_id', auth()->user()->id)->where('response_code', $statusCode);
     }
 
      /**
