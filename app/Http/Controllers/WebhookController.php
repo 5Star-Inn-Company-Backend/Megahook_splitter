@@ -54,7 +54,7 @@ class WebhookController extends Controller
      */
     public function show(Webhook $webhook)
     {
-        //
+        
     }
 
     /**
