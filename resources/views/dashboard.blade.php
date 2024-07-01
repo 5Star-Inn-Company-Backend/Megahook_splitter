@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="col-md-2 pt-3" style=" background:#90EE90; color:#fff; border-radius:1rem">
                                     <p class="mb-4" style="font-size:35px">{{$successResponse}}</p>
-                                    <p>Successfully Deliveries</p>
+                                    <!-- <p>Successfully Deliveries</p> -->
                                 </div>
                                 <div class="col-md-2 pt-3" style=" background:#7c8184; color:#fff; border-radius:1rem">
                                     <p class="mb-4" style="font-size:35px">{{$secondFailureResponse}}</p>
