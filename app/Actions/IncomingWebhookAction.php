@@ -1,6 +1,7 @@
 <?php
 namespace App\Actions;
- 
+
+use App\Jobs\SendWebhook;
 use App\Models\Destination;
 use App\Models\Webhook;
 use Illuminate\Http\Response;
@@ -23,7 +24,8 @@ class IncomingWebhookAction
             return response(['message' => 'Destination endpoint not found!'], 404);
         }
 
-        $response = Http::post($destination->endpoint_url, $payload);
+        $response = SendWebhook::dispatch($destination, $payload);
+        //$response = Http::post($destination->endpoint_url, $payload);
          
         if (!$response->successful()) {
             return response(['message' => 'Failed to send payload!', 'response' => $response->json()], $response->status());

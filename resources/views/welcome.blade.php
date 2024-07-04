@@ -140,7 +140,7 @@
 
         <div class="row" style="display: flex; justify-content:center">
           <div class="col-md-6 col-lg-3 mb-5 mb-lg-0" data-aos="fade-up">
-              <a href="{{route('login')}}" class="btn-get-started-now scrollto">Get Started now</a>
+              <a href="{{route('register')}}" class="btn-get-started-now scrollto">Get Started now</a>
             </div>
 
           <div class="col-md-6 col-lg-3 mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
