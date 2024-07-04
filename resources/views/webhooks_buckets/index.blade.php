@@ -29,17 +29,17 @@
                             <summary class="bg-inherit px-5 py-3 text-lg cursor-pointer">{{ $webhook->input_name }}
                                 <div class="float-right mb-1">
                                     <a href="{{ route('webhook.edit', $webhook) }}"
-                                        class="btn btn-warning "> edit <i class="fa fa-pen"></i></a>
+                                        class="btn btn-warning "> Edit <i class="fa fa-pen"></i></a>
                                     {{-- <button type="button" class="btn btn-warning "
                                                 onclick="editBucketBtn({{ $webhook }})" style="cursor:pointer"
                                                 data-toggle="modal" data-target="#editBucket" id="edit-bucket-btn">
-                                                edit bucket <i class="fa fa-pen"></i>
+                                                Edit Bucket <i class="fa fa-pen"></i>
                                             </button> --}}
                                     <form class="d-inline" action="{{ route('webhook.destroy', $webhook->id) }}"
                                         method="post" onsubmit="return confirm('Are you sure?');">
                                         @csrf
                                         @method('delete')
-                                        <button type="submit" class="btn btn-danger">delete <i
+                                        <button type="submit" class="btn btn-danger">Delete <i
                                                 class="fa fa-trash"></i></button>
                                     </form>
                                 </div>
@@ -58,9 +58,9 @@
                                 <div class="my-3">
                                     <button type="button" class="btn btn-success" data-target="#createDestination"
                                         data-toggle="modal" onclick="createNewDestination({{ $webhook->id }})">
-                                        new destination <i class="fa fa-plus"></i>
+                                        New Destination <i class="fa fa-plus"></i>
                                     </button>
-                                    {{-- <a href="{{ route('webhook.edit', $webhook) }}" class="btn btn-secondary "> edit <i
+                                    {{-- <a href="{{ route('webhook.edit', $webhook) }}" class="btn btn-secondary "> Edit <i
                                             class="fa fa-pen"></i></a> --}}
                                 </div>
                                 @if (!$webhook->destinations->isEmpty())
@@ -72,22 +72,22 @@
                                                 <div>
                                                     <button type="button" class="btn  btn-primary"
                                                         data-target="#editDestination" data-toggle="modal"
-                                                        onclick="editDestination({{ $webhook->id }}, {{ $destination }})">edit
-                                                        destination <i class="fa fa-pen"></i></button>
+                                                        onclick="editDestination({{ $webhook->id }}, {{ $destination }})">Edit
+                                                        Destination <i class="fa fa-pen"></i></button>
 
                                                     <form class="d-inline"
                                                         action="{{ route('destination.delete', $destination->id) }}"
                                                         method="post" onsubmit="return confirm('Are you sure?');">
                                                         @csrf
                                                         @method('delete')
-                                                        <button type="submit" class="btn btn-danger">delete <i
+                                                        <button type="submit" class="btn btn-danger">Delete <i
                                                                 class="fa fa-trash"></i></button>
                                                     </form>
                                                 </div>
                                             </div>
                                             <div class="card-body">
                                                 <div class="mb-4">
-                                                    <h1>Destination endpoints:</h1>
+                                                    <h1>Destination Endpoints:</h1>
                                                     <p class="font-weight-bold" style="font-size: 12px;">
                                                         {{ $destination->endpoint_url }}</p>
                                                 </div>
