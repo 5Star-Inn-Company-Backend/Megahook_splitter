@@ -29,16 +29,32 @@
     <!-- Template Main CSS File -->
     <link href="Maxim/assets/css/style.css" rel="stylesheet">
 
+    <style>
+        .notification {
+  animation: disappear 5s forwards;
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+    </style>
+
 </head>
 
-<body>
+<body style="position: relative;">
 
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex justify-content-between">
 
             <div class="logo">
-                <h1><a href="index.html">Megahook Splitter</a></h1>
+                <h1><a href="/">Megahook Splitter</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
@@ -112,10 +128,19 @@
                     </div> --}}
 
                     <div class="col-lg-4 col-md-6 footer-newsletter">
+                    @if(session('success'))
+                        <p style="position:absolute; top:0; right:0; padding:10px;" class="notification btn btn-success">{{session('success')}}</p>
+                    @endif
                         <h4>Our Newsletter</h4>
                         <p>Subscribe to our news letters to get our latest updates and services</p>
-                        <form action="" method="post">
-                            <input type="email" name="email"><input type="submit" value="Subscribe" disabled>
+                        <form action="/newsletter" method="post">
+                            @csrf
+                            <input type="email" name="email">
+                            <x-input-error class="mt-2 text-red-500" :messages="$errors->get('email')" />
+                            <!-- @error('email')
+                                <span class="text-xs text-red-500">{{$message}}</span>
+                            @enderror -->
+                            <input type="submit" value="Subscribe">
                         </form>
 
                     </div>
@@ -131,8 +156,10 @@
         </div>
     </footer><!-- End Footer -->
 
+    
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
+           
 
     <!-- Vendor JS Files -->
     <script src="Maxim/assets/vendor/aos/aos.js"></script>

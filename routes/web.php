@@ -8,6 +8,7 @@ use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RequestLogController;
 use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\WebhookBucketController;
 
 Route::get('/', function () {
@@ -44,5 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('request-log', RequestLogController::class);
 
 });
+
+Route::post('newsletter', NewsletterController::class);
 
 require __DIR__ . '/auth.php';
