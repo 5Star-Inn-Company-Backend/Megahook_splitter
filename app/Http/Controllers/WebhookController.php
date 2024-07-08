@@ -23,9 +23,9 @@ class WebhookController extends Controller
      */
     public function create()
     {
-        $authenticationTypes = Webhook::AUTHENTICATION_TYPES;
+       // $authenticationTypes = Webhook::AUTHENTICATION_TYPES;
         $statusCodes = Webhook::STATUS_CODES;
-        return view('buckets.create', compact('authenticationTypes', 'statusCodes'));
+        return view('buckets.create', compact('statusCodes'));
     }
 
     /**
@@ -36,7 +36,7 @@ class WebhookController extends Controller
 
         $data =  $request->validate([
             'input_name' => ['required', 'string'],
-            'authentication_type' => ['required', 'string', 'in:' . implode(",", Webhook::AUTHENTICATION_TYPES)],
+            'authentication_type' => ['required', 'string'],
             'response_code' => ['required', 'int'],
             'response_content_type' => ['required', 'string'],
             'response_content' => ['required', 'string']

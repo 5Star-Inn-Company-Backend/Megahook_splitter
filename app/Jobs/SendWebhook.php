@@ -34,12 +34,6 @@ class SendWebhook implements ShouldQueue
     public function handle(): void
     {
         $response = Http::post($this->destination->endpoint_url, $this->payload);
-
-        // if($response->failed()){
-        //     $this->release(
-        //         now()->addMinutes(15 * $this->attempts())
-        //     );
-        // }
     }
 
     public function retryUntil()

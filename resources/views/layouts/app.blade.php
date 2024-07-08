@@ -61,10 +61,10 @@
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                    <li><a class="nav-link scrollto active" href="/">Home</a></li>
                     <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                    <li><a class="nav-link scrollto" href="#">Pricing</a></li>
-                    <li><a class="nav-link scrollto" href="">Documentation</a></li>
+                    <li><a class="nav-link scrollto" href="/pricing">Pricing</a></li>
+                    <li><a class="nav-link scrollto" href="/documentation">Documentation</a></li>
 
                     @auth
                         <li><a class="nav-link scrollto" href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -111,7 +111,7 @@
                         <ul>
                             <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
                             <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Documentation</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="/documentation">Documentation</a></li>
                             <li><i class="bx bx-chevron-right"></i> <a href="#">Prices</a></li>
                         </ul>
                     </div>

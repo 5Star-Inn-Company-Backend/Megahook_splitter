@@ -8,4 +8,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
- Route::any('incoming/{id}',  [IncomingWebhookController::class, 'incoming'])->name('incoming.webhook');
+ Route::any('incoming/{id}',  [IncomingWebhookController::class, 'incoming'])
+    ->name('incoming.webhook');
+    //->middleware('webhook');

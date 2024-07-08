@@ -13,7 +13,7 @@ class Webhook extends Model
 {
     use HasFactory;
 
-    const AUTHENTICATION_TYPES = ['No Authentication', 'Basic Authentication', 'Token','HMAC SHA1 HASH'];
+    //const AUTHENTICATION_TYPES = ['No Authentication', 'Basic Authentication', 'Token','HMAC SHA1 HASH'];
     const STATUS_CODES = [
         100 => '100 Continue',
         101 => '101 Switching Protocols',

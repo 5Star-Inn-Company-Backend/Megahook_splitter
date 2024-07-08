@@ -3,6 +3,7 @@ namespace App\Actions;
 
 use App\Jobs\SendWebhook;
 use App\Models\Destination;
+use App\Models\RequestLog;
 use App\Models\Webhook;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
@@ -26,13 +27,25 @@ class IncomingWebhookAction
 
         $response = SendWebhook::dispatch($destination, $payload);
         //$response = Http::post($destination->endpoint_url, $payload);
+
          
         if (!$response->successful()) {
             return response(['message' => 'Failed to send payload!', 'response' => $response->json()], $response->status());
+
         } 
+        RequestLog::create([
+            'user_id' => $webhook->user_id,
+            'bucket' => $webhook->input_name,
+            'destination' => $destination->destination_name,
+            'status' => 'success',
+            'response_code' => $webhook->response_code
+        ]);
          
         return response((['message' => 'Payload sent successfully!', 'response' => $webhook->response_content]), $webhook->response_code)
                   ->header('Content-Type', $webhook->response_content_type);
+               
+
+                  
 
         
     }

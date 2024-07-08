@@ -8,7 +8,9 @@ use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RequestLogController;
 use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\WebhookBucketController;
 
 Route::get('/', function () {
@@ -47,5 +49,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('newsletter', NewsletterController::class);
+Route::get('documentation', DocumentationController::class);
+Route::get('pricing', PlanController::class);
 
 require __DIR__ . '/auth.php';

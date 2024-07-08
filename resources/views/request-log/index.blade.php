@@ -40,22 +40,22 @@
                             <th scope="col">#</th>
                             <th scope="col">User</th>
                             <th scope="col">Bucket</th>
-                            <th scope="col">Input</th>
                             <th scope="col">Destination</th>
                             <th scope="col">Status / Attempts</th>
                             <th scope="col">Response Code</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($request_logs as $request_log)
                         <tr>
                             <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>Jacob</td>
-                            <td>@mdo</td>
+                            <td>{{$request_log?->user->name}}</td>
+                            <td>{{$request_log->bucket}}</td>
+                            <td>{{$request_log->destination}}</td>
+                            <td>{{$request_log->status}}</td>
+                            <td>{{$request_log->response_code}}</td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

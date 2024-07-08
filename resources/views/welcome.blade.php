@@ -144,7 +144,7 @@
             </div>
 
           <div class="col-md-6 col-lg-3 mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
-              <a href="" class="btn-see-pricing scrollto">See Pricing</a>
+              <a href="/pricing" class="btn-see-pricing scrollto">See Pricing</a>
             </div>
         </div>
 
