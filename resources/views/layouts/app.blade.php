@@ -135,8 +135,8 @@
                         <p>Subscribe to our news letters to get our latest updates and services</p>
                         <form action="/newsletter" method="post">
                             @csrf
-                            <input type="email" name="email">
-                            <x-input-error class="mt-2 text-red-500" :messages="$errors->get('email')" />
+                            <input type="email" name="email" value="{{@old('email')}}">
+                            <x-input-error style="color:red; font-size: 0.65rem" :messages="$errors->get('email')" />
                             <!-- @error('email')
                                 <span class="text-xs text-red-500">{{$message}}</span>
                             @enderror -->
