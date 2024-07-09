@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WebhookRequest;
 use App\Models\Webhook;
 use App\Models\WebhookBucket;
 use Exception;
@@ -31,18 +32,11 @@ class WebhookController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(WebhookRequest $request)
     {
+        
 
-        $data =  $request->validate([
-            'input_name' => ['required', 'string'],
-            'authentication_type' => ['required', 'string'],
-            'response_code' => ['required', 'int'],
-            'response_content_type' => ['required', 'string'],
-            'response_content' => ['required', 'string']
-        ]);
-
-        if (auth()->user()->webhooks()->create($data)) {
+        if (auth()->user()->webhooks()->create($request->validated())) {
             return redirect()->route('webhook-buckets.index')->with(['succes' => 'success']);
         }
 

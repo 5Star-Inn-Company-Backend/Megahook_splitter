@@ -64,7 +64,9 @@ class Webhook extends Model
         'response_code',
         'response_content_type',
         'response_content',
-        'endpoint'
+        'endpoint',
+        'username',
+        'password'
     ];
 
 

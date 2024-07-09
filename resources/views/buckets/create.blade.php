@@ -27,7 +27,7 @@
 
                         <div class="form-group">
                             <label for="input-type">Authentication Type</label>
-                            <select name="authentication_type" id="" class="form-control">
+                            <select name="authentication_type" id="auth-type" class="form-control">
                                 <option value="" disabled selected>Choose Authentication Type</option> 
                                     <option value="">No Authentication</option>                         
                                     <option value="basic">Basic Authentication</option>
@@ -35,6 +35,42 @@
                                     <option value="hmac">HMAC</option>
                             </select>
                             <x-input-error :messages="$errors->get('authentication_type')" class="mt-2" />
+                        </div>
+
+                        <div id="basic-auth-fields" style="display: none;">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" name="username" class="form-control"
+                                    value="{{ old('username') }}" placeholder="Enter username"/>
+                                <x-input-error :messages="$errors->get('username')" class="mt-2" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" class="form-control"
+                                    value="{{ old('password') }}" placeholder="Enter password"/>
+                                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                            </div>
+                        </div>
+
+                        <div id="token-auth-fields" style="display: none;">
+                            <div class="form-group">
+                                <label for="token">Token</label>
+                                <input type="text" name="token" class="form-control"
+                                    value="{{ old('token') }}" placeholder="Enter token"/>
+                                <x-input-error :messages="$errors->get('token')" class="mt-2" />
+                            </div>
+
+                        </div>
+
+                        <div id="hmac-auth-fields" style="display: none;">
+                            <div class="form-group">
+                                <label for="hmac">HMAC</label>
+                                <input type="text" name="hmac" class="form-control"
+                                    value="{{ old('hmac') }}" placeholder="Enter hmac"/>
+                                <x-input-error :messages="$errors->get('hmac')" class="mt-2" />
+                            </div>
+
                         </div>
 
                         <div class="form-group">
@@ -73,3 +109,43 @@
     </div>
 
 </x-main-layout>
+
+<script>
+ 
+ document.addEventListener('DOMContentLoaded', function() {
+    const authTypeSelect = document.getElementById('auth-type');
+    const basicAuthFields = document.getElementById('basic-auth-fields');
+    const tokenAuthFields = document.getElementById('token-auth-fields');
+    const hmacAuthFields = document.getElementById('hmac-auth-fields');
+
+    if(authTypeSelect){
+        authTypeSelect.addEventListener('change', function() {
+        if (this.value === 'basic') {
+            basicAuthFields.style.display = 'block';
+            tokenAuthFields.style.display = 'none';
+            hmacAuthFields.style.display = 'none';
+        }else if(this.value === 'token'){
+            tokenAuthFields.style.display = 'block';
+            basicAuthFields.style.display = 'none';
+            hmacAuthFields.style.display = 'none';
+        } 
+
+        else if(this.value === 'hmac'){
+            hmacAuthFields.style.display = 'block';
+            tokenAuthFields.style.display = 'none';
+            basicAuthFields.style.display = 'none';
+        } 
+        
+        else {
+            basicAuthFields.style.display = 'none';
+            tokenAuthFields.style.display = 'none';
+            hmacAuthFields.style.display = 'none';
+        }
+    });
+    }
+   
+});
+
+
+
+</script>
