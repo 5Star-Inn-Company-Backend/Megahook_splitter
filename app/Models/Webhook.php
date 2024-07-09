@@ -66,7 +66,10 @@ class Webhook extends Model
         'response_content',
         'endpoint',
         'username',
-        'password'
+        'password',
+        'token_value',
+        'signing_key',
+        'string_format'
     ];
 
 

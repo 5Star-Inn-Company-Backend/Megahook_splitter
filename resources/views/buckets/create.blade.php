@@ -16,12 +16,12 @@
                         <h1 class="p-1 font-weight-bold mb-3" style="font-size:18px">Create Webhook</h1>
                     </div>
 
-                    <form action="{{ route('webhook.store') }}" method="post">
+                    <form action="{{ route('webhook.store') }}" method="post" autocomplete="off">
                         @csrf
                         <div class="form-group">
                             <label for="input-type">Name</label>
                             <input type="text" name="input_name" class="form-control"
-                                value="{{ old('input_name') }}" placeholder="Enter Webhook name"/>
+                                value="{{ old('input_name') }}" placeholder="Enter Webhook name" autocomplete="false"/>
                             <x-input-error :messages="$errors->get('input_name')" class="mt-2" />
                         </div>
 
@@ -56,19 +56,26 @@
                         <div id="token-auth-fields" style="display: none;">
                             <div class="form-group">
                                 <label for="token">Token</label>
-                                <input type="text" name="token" class="form-control"
-                                    value="{{ old('token') }}" placeholder="Enter token"/>
-                                <x-input-error :messages="$errors->get('token')" class="mt-2" />
+                                <input type="text" name="token_value" class="form-control"
+                                    value="{{ old('token_value') }}" placeholder="Enter token value"/>
+                                <x-input-error :messages="$errors->get('token_value')" class="mt-2" />
                             </div>
 
                         </div>
 
                         <div id="hmac-auth-fields" style="display: none;">
                             <div class="form-group">
-                                <label for="hmac">HMAC</label>
-                                <input type="text" name="hmac" class="form-control"
-                                    value="{{ old('hmac') }}" placeholder="Enter hmac"/>
-                                <x-input-error :messages="$errors->get('hmac')" class="mt-2" />
+                                <label for="signing_key">SignIn Key</label>
+                                <input type="text" name="signing_key" class="form-control"
+                                    value="{{ old('signing_key') }}" placeholder="Enter signing key"/>
+                                <x-input-error :messages="$errors->get('signing_key')" class="mt-2" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hmac">String Format</label>
+                                <input type="text" name="string_format" class="form-control"
+                                    value="{{ old('string_format') }}" placeholder="Enter string format"/>
+                                <x-input-error :messages="$errors->get('string_format')" class="mt-2" />
                             </div>
 
                         </div>
