@@ -48,12 +48,13 @@
                     <tbody>
                         @foreach($request_logs as $request_log)
                         <tr>
-                            <th scope="row">1</th>
+                            <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{$request_log?->user->name}}</td>
                             <td>{{$request_log->bucket}}</td>
                             <td>{{$request_log->destination}}</td>
                             <td>{{$request_log->status}}</td>
                             <td>{{$request_log->response_code}}</td>
+                            <td><a href="{{route('request-log.show', $request_log)}}" class="badge badge-info m-1" style="font-size: medium;">View</a></td>
                         </tr>
                         @endforeach
                     </tbody>

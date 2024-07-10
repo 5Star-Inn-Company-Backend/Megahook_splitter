@@ -12,4 +12,11 @@ class RequestLogController extends Controller
             'request_logs' => RequestLog::with('user')->get()
         ]);
     }
+
+    public function show(RequestLog $requestLog)
+    {
+        return view('request-log.show', [
+            'request_log' => $requestLog 
+        ]);
+    }
 }
