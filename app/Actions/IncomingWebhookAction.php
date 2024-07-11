@@ -25,7 +25,7 @@ class IncomingWebhookAction
             return response(['message' => 'Destination endpoint not found!'], 404);
         }
 
-        $response = SendWebhook::dispatch($destination, $payload);
+        $response = SendWebhook::dispatch($destination, $payload, $webhook);
         //$response = Http::post($destination->endpoint_url, $payload);
 
          
@@ -33,13 +33,7 @@ class IncomingWebhookAction
             return response(['message' => 'Failed to send payload!', 'response' => $response->json()], $response->status());
 
         } 
-        RequestLog::create([
-            'user_id' => $webhook->user_id,
-            'bucket' => $webhook->input_name,
-            'destination' => $destination->destination_name,
-            'status' => 'success',
-            'response_code' => $webhook->response_code
-        ]);
+        
          
         return response((['message' => 'Payload sent successfully!', 'response' => $webhook->response_content]), $webhook->response_code)
                   ->header('Content-Type', $webhook->response_content_type);

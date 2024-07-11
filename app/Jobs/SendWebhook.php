@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\Models\Destination;
+use App\Models\RequestLog;
+use App\Models\Webhook;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -22,7 +24,8 @@ class SendWebhook implements ShouldQueue
     public $tries = 0;
     public function __construct(
         public readonly Destination $destination,
-        public readonly array $payload
+        public readonly array $payload,
+        public readonly Webhook $webhook
     )
     {
         //
@@ -33,7 +36,14 @@ class SendWebhook implements ShouldQueue
      */
     public function handle(): void
     {
-        $response = Http::post($this->destination->endpoint_url, $this->payload);
+        $response = Http::timeout(5)->post($this->destination->endpoint_url, $this->payload);
+        RequestLog::create([
+            'user_id' => $this->webhook->user_id,
+            'bucket' => $this->webhook->input_name,
+            'destination' => $this->destination->destination_name,
+            'status' => 'success',
+            'response_code' => $this->webhook->response_code
+        ]);
     }
 
     public function retryUntil()
