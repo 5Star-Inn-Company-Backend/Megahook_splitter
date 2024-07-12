@@ -21,11 +21,18 @@ class IncomingWebhookAction
         if (!$destination) {
             return response(['message' => 'Destination endpoint not found!'], 404);
         }
-        $response = SendWebhook::dispatch($destination, $payload, $webhook);   
+        $response = SendWebhook::dispatch($destination, $payload, $webhook);  
         if (!$response->successful()) {
+            $destination->status = 'failed';
+            $destination->save();
             return response(['message' => 'Failed to send payload!', 'response' => $response->json()], $response->status());
         } 
+         
+        $destination->status = 'success';
+        $destination->save();
         return response((['message' => 'Payload sent successfully!', 'response' => $webhook->response_content]), $webhook->response_code)
                   ->header('Content-Type', $webhook->response_content_type);
+                  
+                  
     }
 }

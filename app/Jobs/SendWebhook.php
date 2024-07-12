@@ -12,7 +12,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Mail;
 
 class SendWebhook implements ShouldQueue
 {
@@ -58,6 +57,6 @@ class SendWebhook implements ShouldQueue
 
     public function successful()
     {
-         return;
+        return;
     }
 }
