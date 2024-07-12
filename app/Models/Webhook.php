@@ -78,7 +78,7 @@ class Webhook extends Model
     }
 
     public function destinations(){
-        return $this->hasOne(Destination::class);
+        return $this->hasMany(Destination::class);
     }
 
     public function user(){
