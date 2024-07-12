@@ -40,15 +40,15 @@
                                     <p>Incoming Webhook</p>
                                 </div>
                                 <div class="col-md-2 pt-3" style=" background:#90EE90; color:#fff; border-radius:1rem">
-                                    <p class="mb-4" style="font-size:35px">{{$successResponse}}</p>
+                                    <p class="mb-4" style="font-size:35px">{{$status2xx}}</p>
                                     <p>Successfully Deliveries</p>
                                 </div>
                                 <div class="col-md-2 pt-3" style=" background:#7c8184; color:#fff; border-radius:1rem">
-                                    <p class="mb-4" style="font-size:35px">{{$secondFailureResponse}}</p>
+                                    <p class="mb-4" style="font-size:35px">{{$status4xx}}</p>
                                     <p>4xxx Failures</p>
                                 </div>
                                 <div class="col-md-2 pt-3" style=" background:#FF474C; color:#fff; border-radius:1rem">
-                                    <p class="mb-4" style="font-size:35px">{{$failureResponse}}</p>
+                                    <p class="mb-4" style="font-size:35px">{{$status5xx}}</p>
                                     <p>5xxx Failures</p>
                                 </div>
                                  
