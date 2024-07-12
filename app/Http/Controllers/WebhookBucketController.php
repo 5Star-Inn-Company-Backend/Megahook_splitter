@@ -17,18 +17,27 @@ class WebhookBucketController extends Controller
        
         $query = Webhook::with('destinations')->where('user_id', auth()->user()->id);
         $webhooks = $query->get();
-        $successResponseCode = Destination::whereHas('webhook.user', function ($query)  {
-            $query = Webhook::with('destinations')->where('user_id', auth()->user()->id);
-            $query->where('id', auth()->user()->id)
-            ->where('status', 'success');    
-        })->whereIn('id', $webhooks->pluck('id'))->count();
+       
 
-        $failedResponseCode = Destination::whereHas('webhook.user', function ($query)  {
-            $query = Webhook::with('destinations')->where('user_id', auth()->user()->id);
-            $query->where('id', auth()->user()->id)
-            ->where('status', 'failed');
-        })->whereIn('id', $webhooks->pluck('id'))->count();
-        $failedResponseCode =  Webhook::with('destinations')->where('user_id', auth()->user()->id)->where('response_code', Webhook::STATUS_CODES['500'])->count();
+        $successResponseCode = Webhook::where('user_id', auth()->user()->id)
+        ->with(['destinations' => function ($query) {
+            $query->where('status', 'success');
+        }])
+        ->get()
+        ->pluck('destinations')
+        ->flatten()
+        ->count();
+
+
+        $failedResponseCode = Webhook::where('user_id', auth()->user()->id)
+        ->with(['destinations' => function ($query) {
+            $query->where('status', 'success');
+        }])
+        ->get()
+        ->pluck('destinations')
+        ->flatten()
+        ->count();
+
         return view('webhooks_buckets.index', compact('webhooks', 'successResponseCode', 'failedResponseCode'));
     }
 
