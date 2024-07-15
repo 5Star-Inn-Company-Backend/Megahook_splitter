@@ -130,5 +130,10 @@ class Webhook extends Model
 
         return $customCode;
     }
+
+    public function setTokenValueAttribute($value):void
+    {
+        $this->attributes['token_value'] = 'Bearer '. $value;
+    }
     
 }

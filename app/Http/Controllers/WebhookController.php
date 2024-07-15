@@ -36,6 +36,7 @@ class WebhookController extends Controller
     {
         //  dd($request->all());
 
+        
         if (auth()->user()->webhooks()->create($request->validated())) {
             return redirect()->route('webhook-buckets.index')->with(['succes' => 'success']);
         }
