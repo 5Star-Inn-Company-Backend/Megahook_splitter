@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Webhook;
 use Illuminate\Foundation\Http\FormRequest;
 
 class WebhookRequest extends FormRequest
@@ -29,13 +30,24 @@ class WebhookRequest extends FormRequest
             'response_code' => ['required', 'int'],
             'response_content_type' => ['required', 'string'],
             'response_content' => ['required', 'string'],
-            'username' => ['nullable', 'sometimes', 'string'],
-            'password' => ['nullable', 'sometimes', 'string'],
+            'username' => ['string'],
+            'password' => ['string'],
             'token_location' => ['nullable', 'sometimes', 'string'],
             'token_variable' => ['nullable', 'sometimes', 'string'],
-            'token_value' => ['nullable', 'sometimes', 'string'],
+            'token_value' => ['string'],
             'signing_key' => ['nullable', 'sometimes', 'string'],
             'string_format' => ['nullable', 'sometimes', 'string'],
         ];
+
+        if($this->input('authentication_type') === Webhook::BASIC)
+        {
+            $rules['username'] = 'required';
+            $rules['password'] = 'required';
+        }
+
+        if($this->input('authentication_type') === Webhook::TOKEN)
+        {
+            $rules['token_value'] = 'required';
+        }
     }
 }
