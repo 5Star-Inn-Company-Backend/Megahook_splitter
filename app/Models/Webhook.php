@@ -89,15 +89,15 @@ class Webhook extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function scopeSuccessResponseCount(Builder $query, $statusCode):Builder
-    {
-        return $query->where('user_id', auth()->user()->id)->where('response_code', $statusCode);
-    }
+    // public function scopeSuccessResponseCount(Builder $query, $statusCode):Builder
+    // {
+    //     return $query->where('user_id', auth()->user()->id)->where('response_code', $statusCode);
+    // }
 
-    public function scopeErrorResponseCount(Builder $query, $statusCode):Builder
-    {
-        return $query->where('user_id', auth()->user()->id)->where('response_code', $statusCode);
-    }
+    // public function scopeErrorResponseCount(Builder $query, $statusCode):Builder
+    // {
+    //     return $query->where('user_id', auth()->user()->id)->where('response_code', $statusCode);
+    // }
 
      /**
      * The "booting" method of the model.
@@ -131,9 +131,14 @@ class Webhook extends Model
         return $customCode;
     }
 
-    public function setTokenValueAttribute($value):void
+    public function setTokenValueAttribute(?string $value):void
     {
-        $this->attributes['token_value'] = 'Bearer '. $value;
+        // if ($this->isDirty('token_value')) {
+            $this->attributes['token_value'] = 'Bearer ' . $value;
+        // } else {
+          //  $this->attributes['token_value'] = null; // or ''
+       // }
+    
     }
     
 }

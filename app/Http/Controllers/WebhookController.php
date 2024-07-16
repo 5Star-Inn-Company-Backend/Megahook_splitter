@@ -57,33 +57,35 @@ class WebhookController extends Controller
      */
     public function edit(WebhookBucket $webhookBucket, Webhook $webhook)
     {
-        $authenticationTypes = Webhook::AUTHENTICATION_TYPES;
         $statusCodes = Webhook::STATUS_CODES;
-        return view('buckets.edit', compact('webhook', 'webhookBucket', 'authenticationTypes', 'statusCodes'));
+        return view('buckets.edit', compact('webhook', 'webhookBucket', 'statusCodes'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Webhook $webhook)
+    public function update(WebhookRequest $request, Webhook $webhook)
     {
-        $data = $request->validate([
-            'input_name' => ['required', 'string'],
-            'authentication_type' => ['required', 'string', 'in:' . implode(",", Webhook::AUTHENTICATION_TYPES)],
-            'response_code' => ['required', 'string', 'in:' . implode(",", Webhook::STATUS_CODES)],
-            'response_content_type' => ['required', 'string'],
-            'response_content' => ['required', 'string']
-        ], [
-            'input_name.required' => 'The input name is required.',
-            'authentication_type.required' => 'The authentication type is required.',
-            'authentication_type.in' => 'Invalid authentication type.',
-            'response_code.required' => 'The response code is required.',
-            'response_code.in' => 'Invalid response code.',
-            'response_content_type.required' => 'The response content type is required.',
-            'response_content.required' => 'The response content is required.'
-        ]);
+        // $data = $request->validate([
+        //     'input_name' => ['required', 'string'],
+        //     'authentication_type' => ['required', 'string'],
+        //     'response_code' => ['required', 'string'],
+        //     'response_content_type' => ['required', 'string'],
+        //     'response_content' => ['required', 'string']
+        // ], [
+        //     'input_name.required' => 'The input name is required.',
+        //     'authentication_type.required' => 'The authentication type is required.',
+        //     'authentication_type.in' => 'Invalid authentication type.',
+        //     'response_code.required' => 'The response code is required.',
+        //     'response_code.in' => 'Invalid response code.',
+        //     'response_content_type.required' => 'The response content type is required.',
+        //     'response_content.required' => 'The response content is required.'
+        // ]);
 
-        if ($webhook->update($data)) {
+        
+
+        //dd($request->validated());
+        if ($webhook->update($request->validated())) {
             return redirect()->route('webhook-buckets.index')->with(['success' => 'Webhook updated successfully.']);
         }
 

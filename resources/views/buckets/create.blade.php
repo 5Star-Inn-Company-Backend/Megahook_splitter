@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <label for="input-type">Authentication Type</label>
                             <select name="authentication_type" id="auth-type" class="form-control">
-                                <option value="" disabled selected>Choose Authentication Type</option> 
+                                <option value="{{ old('authentication_type') }}" disabled selected>Choose Authentication Type</option> 
                                     <option value="no_auth">No Authentication</option>                         
                                     <option value="basic">Basic Authentication</option>
                                     <option value="token">Token</option>

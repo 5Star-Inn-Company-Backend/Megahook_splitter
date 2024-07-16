@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('webhooks', [WebhookController::class, 'create'])->name('webhook.create');
     Route::get('webhooks/{webhook}', [WebhookController::class, 'edit'])->name('webhook.edit');
     Route::post('webhooks', [WebhookController::class, 'store'])->name('webhook.store');
-    Route::patch('webhooks/{webhook}', [WebhookController::class, 'update'])->name('webhook.update');
+    Route::put('webhooks/{webhook}', [WebhookController::class, 'update'])->name('webhook.update');
     Route::delete('webhooks/{webhook}', [WebhookController::class, 'destroy'])->name('webhook.destroy');
 
     Route::post('destinations/webhooks/{webhook}', [DestinationController::class, 'store']);
