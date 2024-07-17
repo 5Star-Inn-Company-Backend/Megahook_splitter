@@ -11,7 +11,7 @@
 }
 
 .documentation-header {
-  background-color: #333;
+ background-color: #333;
   color: #fff;
   padding: 1rem;
   border-bottom: 1px solid #444;
@@ -124,7 +124,7 @@
       <h3 class="documentation-section-title text-xl">Creating Buckets</h3>
       <p class="documentation-description">Create a new bucket by hovering over "Webhook Buckets" in the top navigation and selecting "Add Bucket." Fill out the forms and click save. You can now begin adding destinations to the bucket.</p>
       <h4 class="text-xl font-2xl">Properties</h4>
-      <ul>
+      <ul class="pb-4 pl-6">
           <li>⦁	Name: The name you provide for the bucket to help remember what data flows into it.</li>
           <li>⦁	Authentication Type: How the request is authenticated when it enters our platform. Unauthenticated requests return a 403 status code.</li>
           <li>⦁	Response Code: The HTTP response code returned to the calling system upon a successfully authenticated request.</li>
@@ -163,7 +163,7 @@
       </p>
 
       <h4 class="text-xl font-2xl">Destination Properties</h4>
-      <ul>
+      <ul class="pb-4 pl-6">
           <li>⦁	Destination Name: The name to help remember the target the data is flowing to.</li>
           <li>⦁	Endpoint URL: The URL where the data should be sent. This can be a URL within your application or a third-party integration.</li>
           <li>⦁	Retry Policy: Customize how failures are handled and retried. See the Retry Policy page for details.</li>
@@ -179,7 +179,7 @@
 
     <h4 class="text-xl font-2xl">Supported Authentication Schemes</h4>
     <h5><strong>Buckets</strong> </h5>
-      <ul>
+      <ul class="pl-6 mb-2">
           <li>⦁	No Authentication</li>
            <li>⦁ Basic Authentication</li>
            <li>⦁ Token</li>
@@ -188,13 +188,17 @@
       </ul>
 
     <h5><strong>Destinations</strong></h5>
-      <ul>
+      <ul class="pl-6">
           <li>⦁	Passthrough</li>
            <li>⦁ Basic Authentication</li>
            <li>⦁ Token</li>
            <li>⦁ HMAC SHA1 Hash</li>
            <li>⦁ HMAC SHA256 Hash</li>
       </ul>
+
+      <ul>
+     
+</ul>
 
     </section>
      

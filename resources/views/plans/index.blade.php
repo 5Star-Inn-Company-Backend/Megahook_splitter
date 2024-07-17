@@ -18,6 +18,7 @@
                             <h2>Pricing</h2>
                             <p>You are not setup on an active subscription. Kindly select a subscription below to
                                 continue with our services.</p>
+                                
                         </div>
 
                         <div class="row">
@@ -32,7 +33,7 @@
                                                 <li><i class="fa fa-check"></i> {{ $description }}</li>
                                             @endforeach
                                         </ul>   
-                                            <a href="{{route('login')}}" class="buy-btn">Get Started</a>
+                                            <a href="{{route('register')}}" class="buy-btn">Get Started</a>
                                         
                                     </div>
                                 </div>

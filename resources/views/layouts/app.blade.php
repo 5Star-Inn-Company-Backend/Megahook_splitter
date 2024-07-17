@@ -64,10 +64,10 @@
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="/">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                    <li><a class="nav-link scrollto" href="/pricing">Pricing</a></li>
-                    <li><a class="nav-link scrollto" href="/documentation">Documentation</a></li>
+                    <li><a class="nav-link scrollto {{ Request::is('/') ? 'active' : '' }}"  href="/">Home</a></li>
+                    <li><a class="nav-link scrollto {{ Request::is('/services') ? 'active' : '' }}"  href="#services">Services</a></li>
+                    <li><a class="{{ Request::is('pricing') ? 'active' : '' }}" href="/pricing">Pricing</a></li>
+                    <li><a class="{{ Request::is('documentation') ? 'active' : '' }}"  href="/documentation">Documentation</a></li>
 
                     @auth
                         <li><a class="nav-link scrollto" href="{{ route('dashboard') }}">Dashboard</a></li>
