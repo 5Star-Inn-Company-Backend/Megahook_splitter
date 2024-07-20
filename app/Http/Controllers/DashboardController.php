@@ -12,7 +12,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $showPricingModal = request()->get('showPricingModal');
+       // $showPricingModal = request()->get('showPricingModal');
         $destination = Destination::whereHas('webhook.user', function ($query) {
             $query->where('id', auth()->user()->id);
         })->count();
@@ -30,6 +30,6 @@ class DashboardController extends Controller
             return Str::startsWith($item['response_code'], '5');
         })->count();
              
-        return view('dashboard', compact('showPricingModal', 'destination', 'webhooks', 'status2xx', 'status4xx', 'status5xx' ));
+        return view('dashboard', compact('destination', 'webhooks', 'status2xx', 'status4xx', 'status5xx' ));
     }
 }

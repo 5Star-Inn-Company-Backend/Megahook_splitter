@@ -52,7 +52,11 @@
                             </tr>
                         <tfoot>
                     </table>
+                   
                 </div>
+                @if ($showPricingModal)
+                        @include('modal')
+                    @endif
             </div>
         </div>
     </div>

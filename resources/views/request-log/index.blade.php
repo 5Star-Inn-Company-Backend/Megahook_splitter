@@ -43,6 +43,7 @@
                             <th scope="col">Destination</th>
                             <th scope="col">Status / Attempts</th>
                             <th scope="col">Response Code</th>
+                            <th scope="col">Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,7 +55,8 @@
                             <td>{{$request_log->destination}}</td>
                             <td>{{$request_log->status}}</td>
                             <td>{{$request_log->response_code}}</td>
-                            <td><a href="{{route('request-log.show', $request_log)}}" class="badge badge-info m-1" style="font-size: medium;">View</a></td>
+                            <td>{{$request_log->created_at}}</td>
+                            <td><a href="{{route('request-log.show', $request_log)}}" class="badge badge-info m-1" style="font-size: medium;">View Request</a></td>
                         </tr>
                         @endforeach
                     </tbody>

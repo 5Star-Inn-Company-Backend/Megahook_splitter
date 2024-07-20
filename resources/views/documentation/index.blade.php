@@ -177,7 +177,7 @@
       For outgoing messages to the destination endpoint URL, you can assign custom authentication parameters so the destination can authenticate the request. This is useful if you want to write a single authentication module for your system.
     </p>
 
-    <h4 class="text-xl font-2xl">Supported Authentication Schemes</h4>
+    <h4 class="text-xl font-2xl pb-3">Supported Authentication Schemes</h4>
     <h5><strong>Buckets</strong> </h5>
       <ul class="pl-6 mb-2">
           <li>⦁	No Authentication</li>

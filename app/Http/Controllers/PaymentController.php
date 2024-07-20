@@ -19,12 +19,15 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        return rescue(function () {
+        $showPricingModal = true;
+       // dd($showPricingModal);
+        //return rescue(function () {
             $payments = Payment::with('plan')->latest()->paginate(10);
-            return view('payments.index', compact('payments'));
-        }, function ($ex) {
-            return redirect()->back()->with('error', $ex->getMessage());
-        });
+            return view('payments.index', compact('showPricingModal', 'payments'));
+       // }, 
+        // function ($ex) {
+        //     return redirect()->back()->with('error', $ex->getMessage());
+        // });
     }
 
     /**

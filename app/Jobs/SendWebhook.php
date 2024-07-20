@@ -41,6 +41,7 @@ class SendWebhook implements ShouldQueue
             'bucket' => $this->webhook->input_name,
             'destination' => $this->destination->destination_name,
             'status' => 'success',
+            'input' => $this->payload,
             'response_code' => $this->webhook->response_code
         ]);
     }
