@@ -16,6 +16,8 @@
                         <h1 class="p-1 font-weight-bold mb-3" style="font-size:18px">Create Webhook</h1>
                     </div>
 
+                   
+
                     <form action="{{ route('webhook.store') }}" method="post" autocomplete="off">
                         @csrf
                         <div class="form-group">

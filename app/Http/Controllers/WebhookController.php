@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Plan;
 use App\Http\Requests\WebhookRequest;
 use App\Models\Webhook;
 use App\Models\WebhookBucket;
@@ -34,11 +35,20 @@ class WebhookController extends Controller
      */
     public function store(WebhookRequest $request)
     {
-        //  dd($request->all());
+       
+        $webhook = Webhook::where('user_id', auth()->id())->count();
+        $plan = Plan::from(auth()->user()->plans[0]->name)->createPlan();
 
+        if($webhook > $plan->maxWebhookBucket()){
+            session()->flash('failed_message', 'You have exceeded your limit, kindly upgrade your plan to create more buckets!');
+            return redirect()->route('webhook-buckets.index');
+        }
+         
         
         if (auth()->user()->webhooks()->create($request->validated())) {
-            return redirect()->route('webhook-buckets.index')->with(['succes' => 'success']);
+            session()->flash('success_message', 'You have successfully created a bucket!');
+            return redirect()->route('webhook-buckets.index');
+            
         }
 
         return redirect()->route('webhook-buckets.show')->withFailure('Failed');

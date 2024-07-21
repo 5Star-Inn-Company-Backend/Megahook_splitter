@@ -6,7 +6,7 @@
             </h2>
 
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Plan:<span class="px-4 py-2 border border-transparent rounded-md" style="background-color: #90EE90;">{{auth()->user()->plans[0]->name ?? 'Free'}}</span>
+                Plan:<span class="px-4 py-2 border border-transparent rounded-md" style="background-color: #90EE90;">{{ucFirst(auth()->user()->plans[0]->name) ?? 'Free'}}</span>
             </h2>
 
         </div>

@@ -42,6 +42,18 @@
             </header>
         @endif
 
+                    @if (session('failed_message'))
+                        <div id="flash-message" class="alert alert-danger text-center">
+                            {{ session('failed_message') }}
+                        </div>
+                    @endif
+
+                    @if (session('success_message'))
+                        <div id="flash-message" class="alert alert-success text-center">
+                            {{ session('success_message') }}
+                        </div>
+                    @endif
+
         <!-- Page Content -->
         <main>
             <div class="max-w-7xl mx-auto pt-4 px-4 sm:px-6 lg:px-8">
@@ -140,6 +152,17 @@
         function updateFilterText(value) {
             $('#filterText').text(value);
         }
+
+
+
+       
+    $(document).ready(function() {
+        // setTimeout function to hide the flash message after 2 seconds
+        setTimeout(function() {
+            $('#flash-message').fadeOut('fast');
+        }, 5000); // 2000 milliseconds = 2 seconds
+    });
+ 
 
 
 
