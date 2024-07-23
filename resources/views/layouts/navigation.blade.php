@@ -12,28 +12,45 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <i class="fa fa-home mr-1" style="color: #1bac91"></i> {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('webhook-buckets.index')" :active="request()->routeIs('webhook-buckets.*')">
-                        <i class="fa fa-list mr-1" style="color: #1bac91"></i> {{ __('Webhook Buckets') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('request-log.index')" :active="request()->routeIs('request-log.*')">
-                        <i class="fa fa-institution mr-1" style="color: #1bac91"></i>{{ __('Request Logs') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('payments.index')" :active="request()->routeIs('payments.*')">
-                        <i class="fa fa-server mr-1" style="color: #1bac91"></i> {{ __('Payments') }}
-                    </x-nav-link>
-                  
+                <div class="flex items-center">
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            <i class="fa fa-home mr-1" style="color: #1bac91"></i> {{ __('Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('webhook-buckets.index')" :active="request()->routeIs('webhook-buckets.*')">
+                            <i class="fa fa-list mr-1" style="color: #1bac91"></i> {{ __('Webhook Buckets') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('request-log.index')" :active="request()->routeIs('request-log.*')">
+                            <i class="fa fa-institution mr-1" style="color: #1bac91"></i>{{ __('Request Logs') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('payments.index')" :active="request()->routeIs('payments.*')">
+                            <i class="fa fa-server mr-1" style="color: #1bac91"></i> {{ __('Payments') }}
+                        </x-nav-link>
+                    
+                    </div>
+                     
+
                 </div>
+                
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
+            @if(auth()->user()->plans[0]->name != (App\Enums\Plan::PREMIUM->value))
+            <a href="{{route('payments.index')}}" style="background-color: #4F46E5; color: #FFFFFF; border: none; padding: 5px 20px; font-size: 16px; cursor: pointer; border-radius: 5px; transition: background-color 0.3s ease; text-decoration: none;">
+            Upgrade Plan
+            </a>
+            @endif
+
+                    
+                    <a  class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none">
+                             
+</a>  
+                 
+                <x-dropdown align="right" width="48" class="">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        
                             <div><i class="fa fa-user mr-1" style="color:#1bac91"></i>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">

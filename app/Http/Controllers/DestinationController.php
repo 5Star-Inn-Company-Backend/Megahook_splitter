@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Plan;
 use App\Models\Destination;
+use App\Models\Webhook;
 use Illuminate\Http\Request;
 
 class DestinationController extends Controller
@@ -28,6 +30,7 @@ class DestinationController extends Controller
      */
     public function store(Request $request, $webhookId)
     {
+         
         $data =  $request->validate(
             [
                 'destination_name' => ['required', 'string'],
@@ -38,7 +41,13 @@ class DestinationController extends Controller
             ]
         );
 
+        $destination = Destination::with('webhook')->count();
+        $plan = Plan::from(auth()->user()->plans[0]->name)->createPlan();
 
+
+        if($destination > $plan->maxDestinations()){
+            return;
+        }
         if (Destination::create(array_merge($data, ['webhook_id' => $webhookId]))) {
             return response()->json(['message' => 'success', 'status' => true]);
         };

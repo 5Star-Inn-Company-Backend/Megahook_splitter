@@ -34,21 +34,35 @@
                             <div class="form-group">
                                 <label for="destination-label">Retry Policies</label>
                                 <select name="retry_policies" class="form-control" id="retry-policies">
-                                    <option value="" selected disabled></option>
-                                    <option value="no Auto Retries">No Auto Retries</option>
-                                    <option value="linear">Linear</option>
+                                    <option value="" selected disabled>Choose Policy</option>
+                                    @if(auth()->user()->plans[0]->name != (App\Enums\Plan::PREMIUM->value))
+                                        <option value="no Auto Retries">No Auto Retries</option>
+                                    @else
+                                    
+                                   <option value="linear">Linear</option>
                                     <option value="exponential backoff">Exponential Backoff</option>
+                                    @endif
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="destination-label">Authentication Type</label>
                                 <select name="authentication_type" class="form-control" id="authentication-type">
-                                    <option value="" selected disabled></option>
-                                    <option value="passthrough">PassThrough</option>
-                                    <option value="basic authentication">Basic Authentication</option>
-                                    <option value="token">Token</option>
-                                    <option value="hmac sha1 hash">Hmac Sha1 Hash</option>
+                                    <option value="" selected disabled>Choose Authentication</option>
+                                    @if(auth()->user()->plans[0]->name == (App\Enums\Plan::FREE->value))
+                                            <option value="passthrough">PassThrough</option>
+                                    @endif
+
+                                    @if(auth()->user()->plans[0]->name == (App\Enums\Plan::PREMIUM->value))
+                                            <option value="passthrough">PassThrough</option>
+                                            <option value="basic authentication">Basic Authentication</option>
+                                            <option value="token">Token</option>
+                                            <option value="hmac sha1 hash">Hmac Sha1 Hash</option>
+                                    @endif
+                                    @if(auth()->user()->plans[0]->name == (App\Enums\Plan::BASIC->value))
+                                            <option value="passthrough">PassThrough</option>
+                                            <option value="token">Token</option>
+                                    @endif
                                 </select>
                             </div>
 
@@ -165,7 +179,7 @@ function createNewDestination(webhook_id){
             error: function() {
                 submitDestBtn.text(submitDestBtnText).prop('disabled', false);
                 $('#destination-error').text('');
-                $('#destination-error').append(`<li>Failed to save destination</li>`).show();
+                $('#destination-error').append(`<li>You have exceeded your limit, kindly upgrade your plan to create more destinations!</li>`).show();
             }
 
         });
