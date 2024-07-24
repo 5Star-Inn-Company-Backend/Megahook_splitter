@@ -41,7 +41,9 @@ class DestinationController extends Controller
             ]
         );
 
-        $destination = Destination::with('webhook')->count();
+        $destination = Destination::whereHas('webhook.user', function ($query) {
+            $query->where('id', auth()->id());
+        })->count();
         $plan = Plan::from(auth()->user()->plans[0]->name)->createPlan();
 
 
