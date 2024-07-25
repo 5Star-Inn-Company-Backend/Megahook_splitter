@@ -19,20 +19,13 @@ class IncomingWebhookController extends Controller
     {}
     public function incoming(Request $request, string $id)
     {
-        $validator = Validator::make($request->all(), [
-            'account_name' => 'required|string',
-            'amount' => 'required|numeric',
-            'currency' => 'required|string',
-            'reference' => 'required|string',
-            'name' => 'required|string',
-            'email' => 'required|email',
-        ]);
+        //$validator = Validator::make($request->all());
 
-        if($validator->fails())
-        {
-            return response()->json(['error' => $validator->errors()]);
-        }
+        // if($validator->fails())
+        // {
+        //     return response()->json(['error' => $validator->errors()]);
+        // }
 
-        return $this->incomingWebhookAction->execute($validator, $id);
+        return $this->incomingWebhookAction->execute($request, $id);
     }
 }

@@ -4,14 +4,15 @@ namespace App\Actions;
 use App\Jobs\SendWebhook;
 use App\Models\Destination;
 use App\Models\Webhook;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Validator;
 
 class IncomingWebhookAction
 {
-    public function execute(Validator $validator, string $id): Response
+    public function execute(Request $validator, string $id): Response
     {
-        $payload = $validator->validated();
+        $payload = $validator->toArray();
 
         $webhook = Webhook::where('endpoint', $id)->first();
         if (!$webhook) {
