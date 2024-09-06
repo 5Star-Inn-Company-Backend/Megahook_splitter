@@ -27,9 +27,26 @@
   <div class="flex items-center mb-4 pt-4">
     <span class="text-lg font-semibold mr-2">Payloads:</span>
     <code class="documentation-code-block">
-      @foreach($request_log->input as $key => $value)
-      {{ $key }} => {{ $value }},
-      @endforeach
+       
+    @foreach($request_log->input as $key => $value)
+    @if(is_array($value))
+        {{ $key }} => 
+        @foreach($value as $k => $v)
+            @if(is_array($v))
+                {{ $k }} => 
+                @foreach($v as $kk => $vv)
+                    {{ $kk }} => {{ htmlspecialchars($vv) }},
+                @endforeach
+            @else
+                {{ $k }} => {{ htmlspecialchars($v) }},
+            @endif
+        @endforeach
+    @else
+        {{ $key }} => {{ htmlspecialchars($value) }}
+    @endif
+@endforeach
+
+
       </code>
   </div>
 

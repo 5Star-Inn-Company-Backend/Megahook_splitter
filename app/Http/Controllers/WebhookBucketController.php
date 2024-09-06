@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Destination;
+use App\Models\RequestLog;
 use App\Models\Webhook;
 use Illuminate\Http\Request;
 use App\Models\WebhookBucket;
@@ -15,18 +16,25 @@ class WebhookBucketController extends Controller
     public function index()
     {
        
-        $query = Webhook::with('destinations')->where('user_id', auth()->user()->id);
+        $query = Webhook::with('destinations')->where('user_id', auth()->user()->id)->first();
+        
         $webhooks = $query->get();
-       
-
-        $successResponseCode = Webhook::where('user_id', auth()->user()->id)
-        ->with(['destinations' => function ($query) {
-            $query->where('status', 'success');
-        }])
-        ->get()
-        ->pluck('destinations')
-        ->flatten()
-        ->count();
+        $requestLog = RequestLog::where('user_id', auth()->user()->id)
+                                  ->where('status', 'success')
+                                  ->whereIn('bucket', $query->pluck('input_name')->toArray())
+                                  ->whereIn('destination', $query->destinations->pluck('destination_name')->toArray())
+                                  ->get();
+         
+        $successResponseCode = $requestLog->count();
+        //dd($successResponseCode);
+        // $successResponseCode = Webhook::where('user_id', auth()->user()->id)
+        // ->with(['destinations' => function ($query) {
+        //     $query->where('status', 'success');
+        // }])
+        // ->get()
+        // ->pluck('destinations')
+        // ->flatten()
+        // ->count();
 
 
         $failedResponseCode = Webhook::where('user_id', auth()->user()->id)

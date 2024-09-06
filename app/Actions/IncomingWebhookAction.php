@@ -31,9 +31,11 @@ class IncomingWebhookAction
          
         $destination->status = 'success';
         $destination->save();
+        if($webhook->response_content_type == 'text'){
+            return  response(($webhook->response_content), $webhook->response_code)
+            ->header('Content-Type', $webhook->response_content_type);  
+        }
         return response((['message' => 'Payload sent successfully!', 'response' => $webhook->response_content]), $webhook->response_code)
-                  ->header('Content-Type', $webhook->response_content_type);
-                  
-                  
+                  ->header('Content-Type', $webhook->response_content_type);                  
     }
 }

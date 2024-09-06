@@ -28,11 +28,26 @@ class ActivatePlanJob implements ShouldQueue
     public function handle(): void
     {
         $payment = $this->payment;
+        // if ($payment->type == 'App\Models\Plan') {
+        //     $plan = Plan::findOrFail($payment->type_id);
+        //     if($plan){
+        //         $payment->user->plans()->attach($plan, ['expires_at' => now()->addMonth(), 'status' => Plan:: ACTIVE]);
+        //     }
+        // }
+
         if ($payment->type == 'App\Models\Plan') {
             $plan = Plan::findOrFail($payment->type_id);
-            if($plan){
-                $payment->user->plans()->attach($plan, ['expires_at' => now()->addMonth(), 'status' => Plan:: ACTIVE]);
+            if ($plan) {
+                // Detach the existing plan
+                $payment->user->plans()->detach();
+                
+                // Attach the new plan
+                $payment->user->plans()->attach($plan, [
+                    'expires_at' => now()->addMonth(),
+                    'status' => Plan::ACTIVE
+                ]);
             }
         }
+        
     }
 }

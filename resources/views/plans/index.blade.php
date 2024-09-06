@@ -26,7 +26,7 @@
                             @foreach ($plans as $plan)
                                 <div class="col-lg-4 mb-2" data-aos="fade-up" data-aos-delay="100">
                                     <div class="box">
-                                        <h3>{{ $plan->name }} Plan</h3>
+                                        <h3>{{ ucfirst($plan->name) }} Plan</h3>
                                         <h4><sup>₦</sup>{{ number_format($plan->price, 2) }}<span>per month</span></h4>
                                         <ul>
                                             @foreach (explode(',', $plan->description) as $description)
