@@ -26,7 +26,7 @@ class IncomingWebhookAction
         if (!$response->successful()) {
             $destination->status = 'failed';
             $destination->save();
-            return response(['message' => 'Failed to send payload!', 'response' => $response->json()], $response->status());
+            return response(['message' => 'Failed to send payloads!', 'response' => $response->json()], $response->status());
         } 
          
         $destination->status = 'success';
