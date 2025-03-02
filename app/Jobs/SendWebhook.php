@@ -17,33 +17,31 @@ class SendWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     */
-    public $tries = 0;
+    public $tries = 3;
+    public $backoff = [20, 60];
+
     public function __construct(
         public readonly Destination $destination,
         public readonly array $payload,
         public readonly Webhook $webhook
-    )
-    {
-        //
-    }
+    ) {}
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
         $response = Http::timeout(5)->post($this->destination->endpoint_url, $this->payload);
+
         RequestLog::create([
             'user_id' => $this->webhook->user_id,
             'bucket' => $this->webhook->input_name,
             'destination' => $this->destination->destination_name,
-            'status' => 'success',
+            'status' => $response->successful() ? 'success' : 'failed',
             'input' => $this->payload,
-            'response_code' => $this->webhook->response_code
+            'response_code' => $response->status(),
         ]);
+
+        if (!$response->successful()) {
+            $this->fail(new Exception('Failed to send webhook payload.'));
+        }
     }
 
     public function retryUntil()
@@ -51,13 +49,8 @@ class SendWebhook implements ShouldQueue
         return now()->addDay();
     }
 
-    public function failed()
+    public function failed(Exception $exception)
     {
-         SendWebhookFailedWarning::dispatch($this->destination);
-    }
-
-    public function successful()
-    {
-        return;
+        SendWebhookFailedWarning::dispatch($this->destination);
     }
 }

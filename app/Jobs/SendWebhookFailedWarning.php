@@ -15,24 +15,17 @@ class SendWebhookFailedWarning implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     */
     public $retries = 3;
     public $backoff = [20, 60];
+
     public function __construct(public readonly Destination $destination)
     {
         //
     }
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
-     
-        Mail::to(
-            $this->destination->alert_on_failure
-        )->send(new NotifyUserOnFailedWebhook());
+         Mail::to($this->destination->alert_on_failure)
+            ->send(new NotifyUserOnFailedWebhook());
     }
 }
