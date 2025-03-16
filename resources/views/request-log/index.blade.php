@@ -28,9 +28,9 @@
                 <div class="max-w-7xl text-right p-2">
                     <nav class="navbar navbar-light bg-light justify-content-between">
                         <a class="navbar-brand"></a>
-                        <form class="form-inline">
-                          <input class="form-control mr-sm-2 rounded" type="search" placeholder="Search" aria-label="Search">
-                          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        <form class="form-inline" action="{{ route('request-log.index') }}" method="GET">
+                            <input class="form-control mr-sm-2 rounded" type="search" name="search" placeholder="Search by name or description" aria-label="Search" value="{{ request('search') }}">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </form>
                       </nav>
                 </div>
