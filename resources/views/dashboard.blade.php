@@ -22,11 +22,11 @@
                             <li class="nav-item">
                               <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" onclick="updateFilterText('Last 24 Hours')">Last 24 Hours</a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                               <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" onclick="updateFilterText('Last 7 Days')">Last 7 Days</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false" onclick="updateFilterText('Last 30 Days')">Last 30 Days</a>
+                              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false" onclick="updateFilterText('Last 30 Days')">Last 30 Days</a> -->
                             </li>
                         </ul>
                         <p class="float-right" id="filterText"></p>
@@ -65,7 +65,7 @@
                     </div>
 
 
-                    <div class="card mt-5">
+                    <!-- <div class="card mt-5">
                         <h5 class="card-header"><i class="fa fa-bar-chart" aria-hidden="true"></i> Delivery Statistics
                         </h5>
                         <div class="card-body">
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="card mt-5">
                         <h5 class="card-header"><i class="fa fa-refresh" aria-hidden="true"></i> In Process Hook</h5>
