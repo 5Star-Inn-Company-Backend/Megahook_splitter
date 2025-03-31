@@ -16,39 +16,28 @@ class WebhookBucketController extends Controller
     public function index()
     {
        
-        $query = Webhook::with('destinations')->where('user_id', auth()->user()->id)->first();
-        
-        $webhooks = $query->get();
-        $requestLog = RequestLog::where('user_id', auth()->user()->id)
-                                  ->where('status', 'success')
-                                  ->whereIn('bucket', $query->pluck('input_name')->toArray())
-                                  ->whereIn('destination', $query->destinations->pluck('destination_name')->toArray())
-                                  ->get();
-         
-        $successResponseCode = $requestLog->count();
-        //dd($successResponseCode);
-        // $successResponseCode = Webhook::where('user_id', auth()->user()->id)
-        // ->with(['destinations' => function ($query) {
-        //     $query->where('status', 'success');
-        // }])
-        // ->get()
-        // ->pluck('destinations')
-        // ->flatten()
-        // ->count();
-
-
-        $failedResponseCode = Webhook::where('user_id', auth()->user()->id)
+        $webhooks = Webhook::with('destinations')
+        ->where('user_id', auth()->user()->id)
+        ->get();
+    
+    $requestLog = RequestLog::where('user_id', auth()->user()->id)
+        ->where('status', 'success')
+        ->whereIn('bucket', $webhooks->pluck('input_name')->toArray())
+        ->whereIn('destination', $webhooks->pluck('destinations.*.destination_name')->flatten()->toArray())
+        ->get();
+    
+    $successResponseCode = $requestLog->count();
+    $failedResponseCode = Webhook::where('user_id', auth()->user()->id)
         ->with(['destinations' => function ($query) {
-            $query->where('status', 'success');
+            $query->where('status', '!=', 'success'); 
         }])
         ->get()
         ->pluck('destinations')
         ->flatten()
         ->count();
-
-        return view('webhooks_buckets.index', compact('webhooks', 'successResponseCode', 'failedResponseCode'));
+    
+    return view('webhooks_buckets.index', compact('webhooks', 'successResponseCode', 'failedResponseCode'));  
     }
-
     /**
      * Show the form for creating a new resource.
      */
