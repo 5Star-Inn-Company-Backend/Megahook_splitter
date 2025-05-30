@@ -22,7 +22,9 @@ class PaymentController extends Controller
         $showPricingModal = true;
        // dd($showPricingModal);
         //return rescue(function () {
-            $payments = Payment::with('plan')->latest()->paginate(10);
+            $payments = Payment::with('plan')
+            ->where('user_id', auth()->id())
+            ->latest()->paginate(10);
             return view('payments.index', compact('showPricingModal', 'payments'));
        // }, 
         // function ($ex) {

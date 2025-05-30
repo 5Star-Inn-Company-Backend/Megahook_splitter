@@ -25,7 +25,7 @@ class WebhookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'input_name' => ['required', 'string'],
+            'input_name' => ['required', 'string', 'unique:webhooks,input_name'],
             'authentication_type' => ['required', 'string'],
             'response_code' => ['required', 'int'],
             'response_content_type' => ['required', 'string'],

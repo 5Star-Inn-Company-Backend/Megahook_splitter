@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Destination;
-use App\Models\RequestLog;
 use App\Models\Webhook;
 use Illuminate\Http\Request;
 use App\Models\WebhookBucket;
@@ -13,31 +12,26 @@ class WebhookBucketController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-       
-        $webhooks = Webhook::with('destinations')
-        ->where('user_id', auth()->user()->id)
+public function index()
+{
+     $destinations = Destination::whereHas('webhook', function($query) {
+            $query->where('user_id', auth()->id());
+        })
+        ->get(['id', 'status', 'destination_name', 'endpoint_url', 'webhook_id']);
+
+     $successResponseCode = $destinations->where('status', 'success')->count();
+    $failedResponseCode = $destinations->where('status', 'failed')->count();
+    $pendingCount = $destinations->whereNull('status')->count();
+
+     $webhooks = Webhook::with('destinations')
+        ->where('user_id', auth()->id())
         ->get();
-    
-    $requestLog = RequestLog::where('user_id', auth()->user()->id)
-        ->where('status', 'success')
-        ->whereIn('bucket', $webhooks->pluck('input_name')->toArray())
-        ->whereIn('destination', $webhooks->pluck('destinations.*.destination_name')->flatten()->toArray())
-        ->get();
-    
-    $successResponseCode = $requestLog->count();
-    $failedResponseCode = Webhook::where('user_id', auth()->user()->id)
-        ->with(['destinations' => function ($query) {
-            $query->where('status', '!=', 'success'); 
-        }])
-        ->get()
-        ->pluck('destinations')
-        ->flatten()
-        ->count();
-    
-    return view('webhooks_buckets.index', compact('webhooks', 'successResponseCode', 'failedResponseCode'));  
+
+
+
+        return view('webhooks_buckets.index', compact('webhooks', 'successResponseCode', 'failedResponseCode'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -107,6 +101,6 @@ class WebhookBucketController extends Controller
             return redirect()->route('webhook-buckets.index')->with(['succes' => 'success']);
         }
 
-        return redirect()->route('webhook-buckets.index')->with(['failure' => 'failed']);;
+        return redirect()->route('webhook-buckets.index')->with(['failure' => 'failed']);
     }
 }

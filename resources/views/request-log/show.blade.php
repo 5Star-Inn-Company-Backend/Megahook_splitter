@@ -27,8 +27,7 @@
   <div class="flex items-center mb-4 pt-4">
     <span class="text-lg font-semibold mr-2">Payloads:</span>
     <code class="documentation-code-block">
-       
-    @foreach($request_log->input as $key => $value)
+      @foreach($request_log->input as $key => $value)
     @if(is_array($value))
         {{ $key }} => 
         @foreach($value as $k => $v)
@@ -45,8 +44,6 @@
         {{ $key }} => {{ htmlspecialchars($value) }}
     @endif
 @endforeach
-
-
       </code>
   </div>
 

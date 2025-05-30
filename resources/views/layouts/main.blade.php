@@ -70,115 +70,103 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            // Initialize the date range picker
-            const today = moment();
-            let startDate = today.clone().format('YYYY-MM-DD');
-            let endDate = today.clone().format('YYYY-MM-DD');
+        $('#shippingModal').modal('show');
 
-            function updateDateRangeDisplay(start, end) {
+        const today = new Date();
+        var startDate = today.toJSON().slice(0, 10); // Create a new Date object with the current date and time
+        var endDate = new Date(today.setDate(today.getDate() + 1)).toJSON().slice(0,
+            10); // Create a new Date object with the current date and time
+
+        $(document).ready(function() {
+
+            var start = moment(startDate);
+            var end = moment(endDate);
+
+
+            function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             }
 
             $('#reportrange').daterangepicker({
-                startDate: today,
-                endDate: today,
+                startDate: start,
+                endDate: end,
                 ranges: {
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
                     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
                     'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
+                        'month').endOf('month')]
                 }
-            }, function(start, end) {
-                updateDateRangeDisplay(start, end);
-                startDate = start.format('YYYY-MM-DD');
-                endDate = end.format('YYYY-MM-DD');
-                console.log('Start Date: ' + startDate);
-                console.log('End Date: ' + endDate);
-                fetchData(startDate, endDate);
-            });
+            }, cb);
+            cb(start, end);
+        });
 
-            updateDateRangeDisplay(today, today);
 
-            $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
-                startDate = picker.startDate.format('YYYY-MM-DD');
-                endDate = picker.endDate.format('YYYY-MM-DD');
-                console.log('Start Date: ' + startDate);
-                console.log('End Date: ' + endDate);
-                fetchData(startDate, endDate);
-            });
+        $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+            startDate = picker.startDate.format('YYYY-MM-DD');
+            endDate = picker.endDate.format('YYYY-MM-DD');
+            console.log('Start Date: ' + startDate);
+            console.log('End Date: ' + endDate);
+        });
 
-            function fetchData(startDate, endDate) {
-                $.ajax({
-                    url: '/request-log',
-                    method: 'GET',
-                    data: {
-                        start_date: startDate,
-                        end_date: endDate
+
+        $(function() {
+            const ctx = document.getElementById('myBarChart');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: users,
+                    datasets: [{
+                        label: '#scores',
+                        data: results,
+                        borderWidth: 1,
+                        backgroundColor: 'rgb(79,129,189)',
+                    }]
+                },
+                options: {
+                    animations: {
+                        tension: {
+                            duration: 1000,
+                            easing: 'linear',
+                            from: 1,
+                            to: 0,
+                            loop: true
+                        }
                     },
-                    success: function(response) {
-                        console.log('Data fetched successfully:', response);
-                        updateChart(response);
-                    },
-                    error: function(error) {
-                        console.error('Error fetching data:', error);
-                    }
-                });
-            }
-
-            function updateChart(data) {
-                const ctx = document.getElementById('myBarChart');
-                if (!ctx) {
-                    console.error('Chart element not found!');
-                    return;
-                }
-
-                if (window.myChart) {
-                    window.myChart.destroy();
-                }
-
-                window.myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: data.labels,
-                        datasets: [{
-                            label: '# Scores',
-                            data: data.values,
-                            borderWidth: 1,
-                            backgroundColor: 'rgb(79,129,189)',
-                        }]
-                    },
-                    options: {
-                        animations: {
-                            tension: {
-                                duration: 1000,
-                                easing: 'linear',
-                                from: 1,
-                                to: 0,
-                                loop: true
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                min: 0,
-                                max: 100
-                            }
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            min: 0,
+                            max: 100
                         }
                     }
-                });
-            }
+                }
+            });
 
-            function updateFilterText(value) {
-                $('#filterText').text(value);
-            }
-
-            setTimeout(function() {
-                $('#flash-message').fadeOut('fast');
-            }, 5000);
         });
+
+        $('#filterText').text('Last 24 Hours');
+
+        function updateFilterText(value) {
+            $('#filterText').text(value);
+        }
+
+
+
+       
+    $(document).ready(function() {
+        // setTimeout function to hide the flash message after 2 seconds
+        setTimeout(function() {
+            $('#flash-message').fadeOut('fast');
+        }, 5000); // 2000 milliseconds = 2 seconds
+    });
+ 
+
+
+
+  
     </script>
 
     @yield('script')

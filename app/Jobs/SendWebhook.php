@@ -12,6 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class SendWebhook implements ShouldQueue
 {
@@ -28,27 +29,23 @@ class SendWebhook implements ShouldQueue
 
     public function handle(): void
     {
-        try {
-            $response = Http::timeout(5)->post($this->destination->endpoint_url, $this->payload);
-    
-            RequestLog::create([
-                'user_id' => $this->webhook->user_id,
-                'bucket' => $this->webhook->input_name,
-                'destination' => $this->destination->destination_name,
-                'status' => $response->successful() ? 'success' : 'failed',
-                'input' => $this->payload,
-                'response_code' => $response->status(),
-            ]);
-    
-        } catch (\Exception $e) {
-             RequestLog::create([
-                'user_id' => $this->webhook->user_id,
-                'bucket' => $this->webhook->input_name,
-                'destination' => $this->destination->destination_name,
-                'status' => 'failed',
-                'input' => $this->payload,
-                'response_code' => $response->status(),
-            ]);
+        $response = Http::timeout(5)->post($this->destination->endpoint_url, $this->payload);
+
+        RequestLog::create([
+            'user_id' => $this->webhook->user_id,
+            'bucket' => $this->webhook->input_name,
+            'destination' => $this->destination->destination_name,
+            'status' => $response->successful() ? 'success' : 'failed',
+            'input' => $this->payload,
+            'response_code' => $response->status(),
+        ]);
+
+        if (!$response->successful()) {
+            Log::info('Failed to send webhook payload to '.$this->destination->endpoint_url." :Body: ".$response->status());
+            // $this->fail(new Exception('Failed to send webhook payload.'));
+            $this->failed(new Exception('Failed to send webhook payload.'));
+        }else{
+            Log::info('Successfully sent webhook payload to '.$this->destination->endpoint_url);
         }
     }
 

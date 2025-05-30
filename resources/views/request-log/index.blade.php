@@ -23,7 +23,6 @@
         </div>
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg my-1">
                 <div class="max-w-7xl text-right p-2">
                     <nav class="navbar navbar-light bg-light justify-content-between">
@@ -49,7 +48,7 @@
                     <tbody>
                         @foreach($request_logs as $request_log)
                         <tr>
-                            <th scope="row">{{ $loop->iteration }}</th>
+                            <th scope="row">{{ ($request_logs->currentPage() - 1) * $request_logs->perPage() + $loop->iteration }}</th>
                             <td>{{$request_log?->user->name}}</td>
                             <td>{{$request_log->bucket}}</td>
                             <td>{{$request_log->destination}}</td>
@@ -61,8 +60,12 @@
                         @endforeach
                     </tbody>
                 </table>
+                
+                <!-- Pagination -->
+                <div class="px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
+                    {{ $request_logs->links() }}
+                </div>
             </div>
         </div>
     </div>
-
 </x-main-layout>
