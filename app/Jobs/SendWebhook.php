@@ -43,7 +43,7 @@ class SendWebhook implements ShouldQueue
         if (!$response->successful()) {
             Log::info('Failed to send webhook payload to '.$this->destination->endpoint_url." :Body: ".$response->status());
             // $this->fail(new Exception('Failed to send webhook payload.'));
-            $this->failed(new Exception('Failed to send webhook payload.'));
+//            $this->failed(new Exception('Failed to send webhook payload.'));
         }else{
             Log::info('Successfully sent webhook payload to '.$this->destination->endpoint_url);
         }
